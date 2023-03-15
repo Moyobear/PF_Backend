@@ -1,8 +1,7 @@
 const { Medico, Servicio } = require("../../db");
 const { Op } = require("sequelize");
-const axios = require("axios");
 
-// *Helper para estructurarla info que recibimos de la base de datos y enviarla al front:
+// *Helper para estructurar la info que recibimos de la base de datos y enviarla al front:
 let filtroDB = (item) => {
   return {
     id: item.id,
@@ -12,6 +11,7 @@ let filtroDB = (item) => {
     apellido: item.apellido,
     servicios: item.Servicios.map((element) => element.especialidad).flat(),
     genero: item.genero,
+    edad: item.edad,
     fecha_nacimiento: item.fecha_nacimiento,
     email: item.email,
     telefono: item.telefono,
@@ -53,6 +53,8 @@ const searchMedicoByName = async (nombre) => {
   if (request) {
     let filtro = filtroDB(request);
     return [filtro];
+  } else {
+    return "No existe Médico con ese nombre";
   }
 };
 
@@ -84,6 +86,7 @@ const createMedico = async (
   apellido,
   servicios,
   genero,
+  edad,
   fecha_nacimiento,
   email,
   telefono,
@@ -96,6 +99,7 @@ const createMedico = async (
     nombre,
     apellido,
     genero,
+    edad,
     fecha_nacimiento,
     email,
     telefono,
@@ -111,8 +115,11 @@ const createMedico = async (
   });
   await newMedico.addServicio(medico_especialidad);
 
-  const medico_creado = await searchMedicoByName(nombre);
-  return medico_creado;
+  const medico_creado = await findDni(dni);
+  return {
+    message: "El registro del médico se ha creado exitosamente",
+    medico_creado,
+  };
 };
 
 const updateMedico = async (id, email, telefono, direccion, foto) => {

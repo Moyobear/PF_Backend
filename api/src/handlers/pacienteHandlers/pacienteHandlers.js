@@ -3,7 +3,7 @@ const {
   getAllPacientes,
   findDniPaciente,
   getPacienteById,
-  createPAciente,
+  createPaciente,
   updatePaciente,
   deletePaciente,
 } = require("../../controllers/pacienteControllers/pacienteControllers.js");
@@ -48,6 +48,7 @@ const createPacienteHandler = async (req, res) => {
       apellido,
       dni,
       genero,
+      edad,
       fecha_nacimiento,
       email,
       telefono,
@@ -56,11 +57,12 @@ const createPacienteHandler = async (req, res) => {
       medicamentos,
       alergias,
     } = req.body;
-    const request = await createPAciente(
+    const request = await createPaciente(
       nombre,
       apellido,
       dni,
       genero,
+      edad,
       fecha_nacimiento,
       email,
       telefono,

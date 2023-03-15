@@ -33,8 +33,12 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      edad: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
       fecha_nacimiento: {
-        type: "TIMESTAMP",
+        type: DataTypes.DATEONLY,
         allowNull: false,
       },
       email: {

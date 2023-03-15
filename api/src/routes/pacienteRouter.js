@@ -1,4 +1,5 @@
 const { Router } = require("express");
+const { validadorCreatePaciente } = require("../middlewares/validadores.js");
 
 const {
   getPacientesHandler,
@@ -18,7 +19,7 @@ pacienteRouter.get("/dni", getDniPacienteHandler);
 
 pacienteRouter.get("/:id", getPacienteIdHandler);
 
-pacienteRouter.post("/", createPacienteHandler);
+pacienteRouter.post("/", validadorCreatePaciente, createPacienteHandler);
 
 pacienteRouter.put("/", updatePacienteHandler);
 
