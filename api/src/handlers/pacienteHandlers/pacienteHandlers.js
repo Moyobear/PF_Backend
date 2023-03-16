@@ -8,6 +8,7 @@ const {
   deletePaciente,
 } = require("../../controllers/pacienteControllers/pacienteControllers.js");
 
+// *Handler para buscar un paciente por nombre o para traerlos todos:
 const getPacientesHandler = async (req, res) => {
   try {
     const { nombre } = req.query;
@@ -20,6 +21,7 @@ const getPacientesHandler = async (req, res) => {
   }
 };
 
+// *Handler para buscar un paciente por DNI:
 const getDniPacienteHandler = async (req, res) => {
   try {
     const { dni } = req.body;
@@ -30,6 +32,7 @@ const getDniPacienteHandler = async (req, res) => {
   }
 };
 
+// *Handler para buscar un paciente por ID:
 const getPacienteIdHandler = async (req, res) => {
   try {
     const { id } = req.params;
@@ -41,6 +44,7 @@ const getPacienteIdHandler = async (req, res) => {
   }
 };
 
+// *Handler para crear un paciente:
 const createPacienteHandler = async (req, res) => {
   try {
     const {
@@ -77,6 +81,7 @@ const createPacienteHandler = async (req, res) => {
   }
 };
 
+// *Handler para actualizar un paciente:
 const updatePacienteHandler = async (req, res) => {
   try {
     const {
@@ -104,6 +109,7 @@ const updatePacienteHandler = async (req, res) => {
   }
 };
 
+// *Handler para eliminar un paciente:
 const deletePacienteHandler = async (req, res) => {
   try {
     const { id } = req.params;

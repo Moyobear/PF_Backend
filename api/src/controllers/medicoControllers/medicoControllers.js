@@ -33,6 +33,7 @@ const getMedicos = async () => {
   return filtro;
 };
 
+// *Este controller busca a un paciente por nombre:
 const getAllNames = async () => {
   const request = await Medico.findAll();
   const nombres = request.map((item) => {
@@ -41,6 +42,7 @@ const getAllNames = async () => {
   return nombres;
 };
 
+// *Este controller busca a un médico por nombre:
 const searchMedicoByName = async (nombre) => {
   const request = await Medico.findOne({
     where: { name: { [Op.iLike]: `%${nombre}%` } },
@@ -58,6 +60,7 @@ const searchMedicoByName = async (nombre) => {
   }
 };
 
+// *Este controller busca a un médico por DNI:
 const findDni = async (dni) => {
   const request = await getMedicos();
   let busqueda = request.filter((item) => item.dni === dni);
@@ -68,17 +71,20 @@ const findDni = async (dni) => {
   }
 };
 
+// *Este controller obtiene todos los médicos:
 const getAllMedicos = async () => {
   const request = await getMedicos();
   return request;
 };
 
+// *Este controller busca a un médico por id:
 const getMedicoById = async (id) => {
   const request = await getMedicos();
   const medico = request.filter((item) => item.id === id);
   return medico[0];
 };
 
+// *Este controller permite crear un médico:
 const createMedico = async (
   codigo,
   dni,
@@ -122,6 +128,7 @@ const createMedico = async (
   };
 };
 
+// *Este controller permite actualizar un médico buscándolo por id:
 const updateMedico = async (id, email, telefono, direccion, foto) => {
   const request = await Medico.findByPk(id);
   request.set({
@@ -137,6 +144,7 @@ const updateMedico = async (id, email, telefono, direccion, foto) => {
   return filtro;
 };
 
+// *Este controller elimina un médico por id:
 const deleteMedico = async (id) => {
   const request = await Medico.findByPk(id);
   await request.destroy();

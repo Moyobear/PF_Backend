@@ -1,5 +1,8 @@
 const { Router } = require("express");
-const { validadorCreatePaciente } = require("../middlewares/validadores.js");
+const {
+  validadorCreatePaciente,
+  validadorUpdatePaciente,
+} = require("../middlewares/validadores.js");
 
 const {
   getPacientesHandler,
@@ -21,7 +24,7 @@ pacienteRouter.get("/:id", getPacienteIdHandler);
 
 pacienteRouter.post("/", validadorCreatePaciente, createPacienteHandler);
 
-pacienteRouter.put("/", updatePacienteHandler);
+pacienteRouter.put("/", validadorUpdatePaciente, updatePacienteHandler);
 
 pacienteRouter.delete("/:id/delete", deletePacienteHandler);
 
