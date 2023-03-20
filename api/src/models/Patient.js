@@ -2,63 +2,63 @@ const { DataTypes } = require("sequelize");
 module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define(
-    "paciente",
+    "patient",
     {
-      id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        primaryKey: true,
-        autoincrement: true,
-        unique: true,
-      },
-      nombre: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      apellido: {
+      full_name: {
         type: DataTypes.STRING,
         allowNull: false,
       },
       dni: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        primaryKey: true,
         unique: true,
       },
-      genero: {
+      gender: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      edad: {
+      age: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      fecha_nacimiento: {
+      birthday: {
         type: DataTypes.DATEONLY,
         allowNull: false,
       },
       email: {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
+        validate: {
+          isEmail: {
+            args: true,
+            msg: "El campo tiene que ser un correo válido",
+          },
+        },
       },
-      telefono: {
+      user_name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      user_master: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+        allowNull: false,
+      },
+      phone: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      direccion: {
+      address: {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      enfermedades: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      medicamentos: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      alergias: {
-        type: DataTypes.STRING,
-        allowNull: false,
+      is_plan_pay: {
+        type: DataTypes.BOOLEAN,
       },
     },
     { timestamps: false }

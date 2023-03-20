@@ -1,12 +1,14 @@
 const { Sequelize } = require("sequelize");
 const fs = require("fs");
 const path = require("path");
-const MedicoModel = require("./models/Medico");
-const PacienteModel = require("./models/Paciente");
-const UsuarioModel = require("./models/Usuario");
+const DoctorModel = require("./models/Doctor");
+const PatientModel = require("./models/Patient");
+const PaidsModel = require("./models/Paids");
+const ContractedPlanModel = require("./models/ContractedPlan");
+const PlanModel = require("./models/Plan");
 const PaymentModel = require("./models/Payment");
-const ServicioModel = require("./models/Servicio");
-const TurnoModel = require("./models/Turno");
+const SpecialityModel = require("./models/Speciality");
+const TicketModel = require("./models/Ticket ");
 require("dotenv").config();
 const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME, DB_PORT } = process.env;
 
@@ -18,12 +20,14 @@ const sequelize = new Sequelize(
   }
 );
 
-MedicoModel(sequelize);
-PacienteModel(sequelize);
-UsuarioModel(sequelize);
+DoctorModel(sequelize);
+PatientModel(sequelize);
+PaidsModel(sequelize);
+ContractedPlanModel(sequelize);
+PlanModel(sequelize);
 PaymentModel(sequelize);
-ServicioModel(sequelize);
-TurnoModel(sequelize);
+SpecialityModel(sequelize);
+TicketModel(sequelize);
 
 const basename = path.basename(__filename);
 
@@ -50,27 +54,15 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 // *En sequelize.models están todos los modelos importados como propiedades
 // *Para relacionarlos hacemos un destructuring
-const { Medico, Paciente, Usuario, Payment, Servicio, Turno } =
-  sequelize.models;
 
 // *Aca vendrian las relaciones
-Turno.belongsToMany(Paciente, { through: "Paciente_Turno" });
-Paciente.belongsToMany(Turno, { through: "Paciente_Turno" });
-
-Usuario.hasOne(Paciente);
-Paciente.belongsTo(Usuario);
-
-// Usuario.hasMany(Turno);
-// Turno.belongsTo(Usuario);
-
-Medico.hasMany(Turno);
-Turno.belongsTo(Medico);
-
-Turno.hasOne(Payment);
-Payment.belongsTo(Turno);
-
-Servicio.belongsToMany(Medico, { through: "Medico_Servicio" });
-Medico.belongsToMany(Servicio, { through: "Medico_Servicio" });
+// !Patient vs Ticket = 1 : N
+// !Doctor vs Ticket = 1 : N
+// !Ticket vs Payment = 1 : 1
+// !Doctor vs Speciality = N : N
+// !Patient vs ContractedPlan = 1 : N
+// !ContractedPlan vs Plan = 1 : 1
+// !ContractedPlan vs Paids = 1 : N
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

@@ -2,7 +2,7 @@ const { DataTypes } = require("sequelize");
 module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define(
-    "usuario",
+    "plan",
     {
       id: {
         type: DataTypes.INTEGER,
@@ -11,31 +11,21 @@ module.exports = (sequelize) => {
         autoincrement: true,
         unique: true,
       },
-      nombre: {
+      name: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      apellido: {
-        type: DataTypes.STRING,
+      members: {
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
-      usuario: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
-      },
-      email: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
-      },
-      contrasena: {
-        type: DataTypes.STRING,
+      price: {
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
-      is_admin: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: false,
+      description: {
+        type: DataTypes.STRING,
+        allowNull: false,
       },
     },
     { timestamps: false }

@@ -1,8 +1,8 @@
-const { DataTypes } = require("sequelize");
+const { DataTypes, DATEONLY } = require("sequelize");
 module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define(
-    "turno",
+    "paids",
     {
       id: {
         type: DataTypes.INTEGER,
@@ -11,26 +11,24 @@ module.exports = (sequelize) => {
         autoincrement: true,
         unique: true,
       },
-      motivo: {
+      period: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      observaciones: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      },
-      fecha_cita: {
-        type: "TIMESTAMP",
+      cutoff_date: {
+        type: DATEONLY,
         allowNull: false,
-        unique: true,
       },
-      hora_cita: {
-        type: DataTypes.STRING,
+      date_pay: {
+        type: DATEONLY,
         allowNull: false,
-        unique: true,
       },
-      precio: {
+      price: {
         type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      check: {
+        type: DataTypes.STRING,
         allowNull: false,
       },
     },

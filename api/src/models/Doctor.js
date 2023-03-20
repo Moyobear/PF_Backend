@@ -2,16 +2,9 @@ const { DataTypes } = require("sequelize");
 module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define(
-    "medico",
+    "doctor",
     {
-      id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        primaryKey: true,
-        autoincrement: true,
-        unique: true,
-      },
-      codigo: {
+      code: {
         type: DataTypes.INTEGER,
         allowNull: false,
         unique: true,
@@ -19,41 +12,44 @@ module.exports = (sequelize) => {
       dni: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        primaryKey: true,
         unique: true,
       },
-      nombre: {
+      full_name: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      apellido: {
+      gender: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      genero: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      edad: {
+      age: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      fecha_nacimiento: {
+      birthday: {
         type: DataTypes.DATEONLY,
         allowNull: false,
       },
       email: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+          isEmail: {
+            args: true,
+            msg: "El campo tiene que ser un correo válido"
+          }
+        }
       },
-      telefono: {
+      phone: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      direccion: {
+      address: {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      foto: {
+      image: {
         type: DataTypes.STRING,
         defaultValue:
           "https://ceslava.s3-accelerate.amazonaws.com/2016/04/mistery-man-gravatar-wordpress-avatar-persona-misteriosa-510x510.png",
