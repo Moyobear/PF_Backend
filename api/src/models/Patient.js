@@ -4,15 +4,15 @@ module.exports = (sequelize) => {
   sequelize.define(
     "patient",
     {
-      full_name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
       dni: {
         type: DataTypes.INTEGER,
         allowNull: false,
         primaryKey: true,
         unique: true,
+      },
+      full_name: {
+        type: DataTypes.STRING,
+        allowNull: false,
       },
       gender: {
         type: DataTypes.STRING,
@@ -26,29 +26,6 @@ module.exports = (sequelize) => {
         type: DataTypes.DATEONLY,
         allowNull: false,
       },
-      email: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          isEmail: {
-            args: true,
-            msg: "El campo tiene que ser un correo válido",
-          },
-        },
-      },
-      user_name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      password: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      user_master: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: false,
-        allowNull: false,
-      },
       phone: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -57,8 +34,9 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      is_plan_pay: {
-        type: DataTypes.BOOLEAN,
+      consultations_available: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
       },
     },
     { timestamps: false }

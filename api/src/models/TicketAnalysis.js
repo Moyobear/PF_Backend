@@ -1,8 +1,8 @@
-const { DataTypes } = require("sequelize");
+const { DataTypes, DATEONLY } = require("sequelize");
 module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define(
-    "contractedPlan",
+    "ticketAnalysis",
     {
       id: {
         type: DataTypes.INTEGER,
@@ -11,17 +11,26 @@ module.exports = (sequelize) => {
         autoincrement: true,
         unique: true,
       },
-      code: {
-        type: DataTypes.INTEGER,
+      type_analysis: {
+        type: DataTypes.STRING,
         allowNull: false,
       },
-      amount: {
-        type: DataTypes.INTEGER,
+      date: {
+        type: DATEONLY,
         allowNull: false,
+      },
+      hour: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
       },
       price: {
         type: DataTypes.INTEGER,
         allowNull: false,
+      },
+      is_paid: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
       },
     },
     { timestamps: false }

@@ -1,8 +1,8 @@
-const { DataTypes } = require("sequelize");
+const { DataTypes, DATEONLY } = require("sequelize");
 module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define(
-    "plan",
+    "ticketMedical",
     {
       id: {
         type: DataTypes.INTEGER,
@@ -11,29 +11,26 @@ module.exports = (sequelize) => {
         autoincrement: true,
         unique: true,
       },
-      name: {
+      titile: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      members: {
-        type: DataTypes.INTEGER,
+      observations: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      date: {
+        type: DATEONLY,
         allowNull: false,
       },
-      price: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-      description: {
+      hour: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true,
       },
-      code: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-      consultations_per_patients: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
+      is_confirmed: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
       },
     },
     { timestamps: false }

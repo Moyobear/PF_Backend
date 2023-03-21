@@ -4,11 +4,13 @@ const path = require("path");
 const DoctorModel = require("./models/Doctor");
 const PatientModel = require("./models/Patient");
 const PaidsModel = require("./models/Paids");
-const ContractedPlanModel = require("./models/ContractedPlan");
+const ScheduleModel = require("./models/Schedule");
 const PlanModel = require("./models/Plan");
 const PaymentModel = require("./models/Payment");
 const SpecialityModel = require("./models/Speciality");
-const TicketModel = require("./models/Ticket ");
+const TicketMedicalModel = require("./models/TicketMedical ");
+const TicketAnalysislModel = require("./models/TicketAnalysis");
+const UserModel = require("./models/User");
 require("dotenv").config();
 const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME, DB_PORT } = process.env;
 
@@ -23,11 +25,13 @@ const sequelize = new Sequelize(
 DoctorModel(sequelize);
 PatientModel(sequelize);
 PaidsModel(sequelize);
-ContractedPlanModel(sequelize);
+ScheduleModel(sequelize);
 PlanModel(sequelize);
 PaymentModel(sequelize);
 SpecialityModel(sequelize);
-TicketModel(sequelize);
+TicketMedicalModel(sequelize);
+TicketAnalysislModel(sequelize);
+UserModel(sequelize);
 
 const basename = path.basename(__filename);
 
@@ -54,15 +58,32 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 // *En sequelize.models están todos los modelos importados como propiedades
 // *Para relacionarlos hacemos un destructuring
+const {
+  Doctor,
+  Paids,
+  Patient,
+  Payment,
+  Plan,
+  Schedule,
+  Speciality,
+  TicketMedical,
+  TicketAnalysis,
+  User,
+} = sequelize.models;
 
-// *Aca vendrian las relaciones
-// !Patient vs Ticket = 1 : N
-// !Doctor vs Ticket = 1 : N
-// !Ticket vs Payment = 1 : 1
-// !Doctor vs Speciality = N : N
-// !Patient vs ContractedPlan = 1 : N
-// !ContractedPlan vs Plan = 1 : 1
-// !ContractedPlan vs Paids = 1 : N
+// *Aca vendrian las relaciones:
+// ?Patient vs TicketMedical = 1 : N
+// ?Patient vs TicketAnalysis = 1 : N
+// ?Doctor vs TicketMedical = 1 : N
+// ?TicketAnalysis vs Payment = 1 : 1
+// ?Doctor vs Speciality = N : N
+// ?Patient vs Plan = 1 : N
+// ?Plan vs User = 1 : N
+// ?User vs Paid = 1 : N
+// ?User vs Patient = 1 : N
+// ?Plan vs Paids = 1 : N
+// ?User vs Doctor = 1 : N
+// ?Doctor vs Schedule = 1 : 1
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

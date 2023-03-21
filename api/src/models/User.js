@@ -1,8 +1,8 @@
-const { DataTypes, DATEONLY } = require("sequelize");
+const { DataTypes } = require("sequelize");
 module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define(
-    "ticket",
+    "user",
     {
       id: {
         type: DataTypes.INTEGER,
@@ -11,38 +11,39 @@ module.exports = (sequelize) => {
         autoincrement: true,
         unique: true,
       },
-      titile: {
+      full_name: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      observations: {
+      email: {
         type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          isEmail: {
+            args: true,
+            msg: "El campo tiene que ser un correo válido",
+          },
+        },
+      },
+      password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      user_name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      image: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      is_admin: {
+        type: DataTypes.BOOLEAN,
         allowNull: true,
       },
-      date: {
-        type: DATEONLY,
-        allowNull: false,
-      },
-      hour: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
-      },
-      price: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-      is_confirmed: {
+      is_plan_pay: {
         type: DataTypes.BOOLEAN,
-        defaultValue: false,
-      },
-      is_paid: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: false,
-      },
-      is_delivery: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: false,
+        allowNull: false,
       },
     },
     { timestamps: false }
