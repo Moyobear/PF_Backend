@@ -73,81 +73,63 @@ const {
 
 // *Aca vendrian las relaciones:
 // *Relaciones 1 a 1:
+// ?Schedule vs TicketMedical = 1 : 1
+Schedule.hasOne(TicketMedical);
+TicketMedical.belongsTo(Schedule);
+
 // ?TicketAnalysis vs Payment = 1 : 1
-// Añade una clave foranea analysis_id a la tabla payment
-TicketAnalysis.hasOne(Payment, { as: "payment", foreignKey: "analysis_id" });
-Payment.belongsTo(TicketAnalysis, {
-  as: "ticketAnalysis",
-  foreignKey: "analysis_id",
-});
+TicketAnalysis.hasOne(Payment);
+Payment.belongsTo(TicketAnalysis);
 
 // ?Doctor vs Schedule = 1 : 1
-// Añade una clave foranea doctor_id a la tabla schedule
-Doctor.hasOne(Schedule, { as: "schedule", foreignKey: "doctor_id" });
-Schedule.belongsTo(Doctor, { as: "doctor", foreignKey: "doctor_id" });
+Doctor.hasOne(Schedule);
+Schedule.belongsTo(Doctor);
 
 // *Relaciones 1 a N:
 // ?Patient vs TicketMedical = 1 : N
-// Se añade una clave foranea ticket_id a la tabla ticketMedical
-Patient.hasMany(TicketMedical, {
-  as: "ticketMedical",
-  foreignKey: "ticket_id",
-});
-TicketMedical.belongsTo(Patient, { as: "patient" });
+Patient.hasMany(TicketMedical);
+TicketMedical.belongsTo(Patient);
 
 // ?Patient vs TicketAnalysis = 1 : N
-// Se añade una clave foranea patient_id a la tabla ticketanalysis
-Patient.hasMany(TicketAnalysis, {
-  as: "ticketAnalysis",
-  foreignKey: "patient_id",
-});
-TicketAnalysis.belongsTo(Patient, { as: "patient" });
+Patient.hasMany(TicketAnalysis);
+TicketAnalysis.belongsTo(Patient);
 
 // ?Doctor vs TicketMedical = 1 : N
-// Se añade una clave foranea doctor_id a la tabla ticketMedical
-Doctor.hasMany(TicketMedical, { as: "ticketMedical", foreignKey: "doctor_id" });
-TicketMedical.belongsTo(Doctor, { as: "doctor" });
+Doctor.hasMany(TicketMedical);
+TicketMedical.belongsTo(Doctor);
 
 // ?Doctor vs Speciality = N : N
-// Se añade una clave foranea doctor_id a la tabla speciality
-Doctor.hasMany(Speciality, { as: "speciality", foreignKey: "doctor_id" });
-Speciality.belongsTo(Doctor, { as: "doctor" });
+Doctor.hasMany(Speciality);
+Speciality.belongsTo(Doctor);
 
 // ?Plan vs Patient = 1 : N
-// Se añade una clave foranea plan_id a la tabla patient
-Plan.hasMany(Patient, { as: "patient", foreignKey: "plan_id" });
-Patient.belongsTo(Plan, { as: "plan" });
+Plan.hasMany(Patient);
+Patient.belongsTo(Plan);
 
 // ?Plan vs User = 1 : N
-// Se añade una clave foranea plan_id a la tabla user
-Plan.hasMany(User, { as: "user", foreignKey: "plan_id" });
-User.belongsTo(Plan, { as: "plan" });
+Plan.hasMany(User);
+User.belongsTo(Plan);
 
 // ?User vs Paid = 1 : N
-// Se añade una clave foranea user_id a la tabla paid
-User.hasMany(Paid, { as: "paid", foreignKey: "user_id" });
-Paid.belongsTo(User, { as: "user" });
+User.hasMany(Paids);
+Paids.belongsTo(User);
 
 // ?User vs Patient = 1 : N
-// Se añade una clave foranea user_id a la tabla patient
-User.hasMany(Patient, { as: "patient", foreignKey: "user_id" });
-Patient.belongsTo(User, { as: "user" });
+User.hasMany(Patient);
+Patient.belongsTo(User);
 
 // ?Plan vs Paids = 1 : N
-// Se añade una clave foranea plan_id a la tabla paids
-Plan.hasMany(Paids, { as: "paids", foreignKey: "plan_id" });
-Paids.belongsTo(Plan, { as: "plan" });
+Plan.hasMany(Paids);
+Paids.belongsTo(Plan);
 
 // ?User vs Doctor = 1 : N
-// Se añade una clave foranea user_id a la tabla doctor
-User.hasMany(Doctor, { as: "doctor", foreignKey: "user_id" });
-Doctor.belongsTo(User, { as: "user" });
+User.hasMany(Doctor);
+Doctor.belongsTo(User);
 
 // *Relaciones N a N:
 // ?Doctor vs Speciality = N : N
-// Doctor tiene muchas specialties
-Doctor.belongsToMany(Speciality, { through: "doctor_speciality" });
-Speciality.belongsToMany(Doctor, { through: "doctor_speciality" });
+Doctor.belongsToMany(Speciality);
+Speciality.belongsToMany(Doctor);
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
