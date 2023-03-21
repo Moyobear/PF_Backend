@@ -2,7 +2,7 @@ const { Router } = require("express");
 const {
   validadorCreatePaciente,
   validadorUpdatePaciente,
-} = require("../middlewares/validadores.js");
+} = require("../middlewares/validators.js");
 
 const {
   getPacientesHandler,

@@ -1,6 +1,6 @@
 // *Creamos varios Middlewares para verificar que nos envían los datos que son obligatorios por sus modelos para crear y actualizar:
-// *Validador para crear a un médico:
-const validadorCreateMedico = (req, res, next) => {
+// *Validador para crear a un doctor:
+const validatorCreateDoctor = (req, res, next) => {
   const {
     codigo,
     dni,
@@ -63,14 +63,14 @@ const validadorCreateMedico = (req, res, next) => {
 };
 
 // *Validador para actualizar al registro de un médico:
-const validadorUpdateMedico = (req, res, next) => {
+const validatorUpdateDoctor = (req, res, next) => {
   const { id } = req.body;
   if (!id) return res.status(400).json({ error: "Falta el id" });
   next();
 };
 
 // *Validador para crear a un paciente:
-const validadorCreatePaciente = (req, res, next) => {
+const validatorCreatePatient = (req, res, next) => {
   const {
     nombre,
     apellido,
@@ -140,15 +140,15 @@ const validadorCreatePaciente = (req, res, next) => {
 };
 
 // *Validador para actualizar al registro de un paciente:
-const validadorUpdatePaciente = (req, res, next) => {
+const validatorUpdatePatient = (req, res, next) => {
   const { id } = req.body;
   if (!id) return res.status(400).json({ error: "Falta el id" });
   next();
 };
 
 module.exports = {
-  validadorCreateMedico,
-  validadorUpdateMedico,
-  validadorCreatePaciente,
-  validadorUpdatePaciente
+  validatorCreateDoctor,
+  validatorUpdateDoctor,
+  validatorCreatePatient,
+  validatorUpdatePatient
 };

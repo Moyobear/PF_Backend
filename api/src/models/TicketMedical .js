@@ -20,7 +20,7 @@ module.exports = (sequelize) => {
         allowNull: true,
       },
       date: {
-        type: DATEONLY,
+        type: DataTypes.DATEONLY,
         allowNull: false,
       },
       hour: {

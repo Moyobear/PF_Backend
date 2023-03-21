@@ -44,6 +44,10 @@ module.exports = (sequelize) => {
         defaultValue:
           "https://ceslava.s3-accelerate.amazonaws.com/2016/04/mistery-man-gravatar-wordpress-avatar-persona-misteriosa-510x510.png",
       },
+      is_delete: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
     },
     { timestamps: false }
   );

@@ -16,11 +16,11 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
       cutoff_date: {
-        type: DATEONLY,
+        type: DataTypes.DATEONLY,
         allowNull: false,
       },
       date_pay: {
-        type: DATEONLY,
+        type: DataTypes.DATEONLY,
         allowNull: false,
       },
       price: {
