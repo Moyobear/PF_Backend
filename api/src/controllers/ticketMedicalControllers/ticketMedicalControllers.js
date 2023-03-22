@@ -32,3 +32,5 @@ const createTicket = async (
 module.exports = {
   createTicket,
 };
+
+// TODO: auth0, firebase, supabase
