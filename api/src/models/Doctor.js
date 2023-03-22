@@ -4,6 +4,12 @@ module.exports = (sequelize) => {
   sequelize.define(
     "doctor",
     {
+      id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        primaryKey: true,
+        unique: true,
+      },
       code: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -12,7 +18,6 @@ module.exports = (sequelize) => {
       dni: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        primaryKey: true,
         unique: true,
       },
       full_name: {

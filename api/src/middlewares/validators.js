@@ -2,62 +2,32 @@
 // *Validador para crear a un doctor:
 const validatorCreateDoctor = (req, res, next) => {
   const {
-    codigo,
+    code,
     dni,
-    nombre,
-    apellido,
-    servicios,
-    genero,
-    edad,
-    fecha_nacimiento,
-    email,
-    telefono,
-    foto,
+    full_name,
+    gender,
+    age,
+    birthday,
+    phone,
+    address,
+    image,
+    speciality,
   } = req.body;
-  if (!codigo)
-    return res
-      .status(400)
-      .json({ error: "Falta el código del Médico. Dato obligatorio" });
-  if (!dni)
-    return res
-      .status(400)
-      .json({ error: "Falta el DNI del Médico. Dato obligatorio" });
-  if (!nombre)
-    return res
-      .status(400)
-      .json({ error: "Falta el nombre del médico. Dato obligatorio" });
-  if (!apellido)
-    return res
-      .status(400)
-      .json({ error: "Falta el apellido del médico. Dato obligatorio" });
-  if (!servicios)
-    return res
-      .status(400)
-      .json({ error: "Falta la especialidad del médico. Dato obligatorio" });
-  if (!genero)
-    return res
-      .status(400)
-      .json({ error: "Falta el genero del médico. Dato obligatorio" });
-  if (!edad)
-    return res
-      .status(400)
-      .json({ error: "Falta la edad del médico. Dato obligatorio" });
-  if (!fecha_nacimiento)
-    return res.status(400).json({
-      error: "Falta la fecha de nacimiento del médico. Dato obligatorio",
-    });
-  if (!email)
-    return res.status(400).json({
-      error: "Falta el email del médico. Dato obligatorio",
-    });
-  if (!telefono)
-    return res.status(400).json({
-      error: "Falta el telefono del médico. Dato obligatorio",
-    });
-  if (!foto)
-    return res.status(400).json({
-      error: "Falta la foto del médico. Dato obligatorio",
-    });
+  if (
+    ![
+      code,
+      dni,
+      full_name,
+      gender,
+      age,
+      birthday,
+      phone,
+      address,
+      image,
+      speciality,
+    ].every(Boolean)
+  )
+    return res.status(404).json({ error: "Falta enviar datos obligatorios" });
 
   next();
 };
@@ -65,76 +35,16 @@ const validatorCreateDoctor = (req, res, next) => {
 // *Validador para actualizar al registro de un médico:
 const validatorUpdateDoctor = (req, res, next) => {
   const { id } = req.body;
-  if (!id) return res.status(400).json({ error: "Falta el id" });
+  if (!id) return res.status(404).json({ error: "Falta el id" });
   next();
 };
 
 // *Validador para crear a un paciente:
 const validatorCreatePatient = (req, res, next) => {
-  const {
-    nombre,
-    apellido,
-    dni,
-    genero,
-    edad,
-    fecha_nacimiento,
-    email,
-    telefono,
-    direccion,
-    enfermedades,
-    medicamentos,
-    alergias,
-  } = req.body;
+  const { full_name, dni, gender, age, birthday, phone, address } = req.body;
 
-  if (!dni)
-    return res
-      .status(400)
-      .json({ error: "Falta el DNI del paciente. Dato obligatorio" });
-  if (!nombre)
-    return res
-      .status(400)
-      .json({ error: "Falta el nombre del paciente. Dato obligatorio" });
-  if (!apellido)
-    return res
-      .status(400)
-      .json({ error: "Falta el apellido del paciente. Dato obligatorio" });
-  if (!genero)
-    return res
-      .status(400)
-      .json({ error: "Falta el genero del paciente. Dato obligatorio" });
-  if (!edad)
-    return res
-      .status(400)
-      .json({ error: "Falta la edad del paciente. Dato obligatorio" });
-  if (!fecha_nacimiento)
-    return res.status(400).json({
-      error: "Falta la fecha de nacimiento del paciente. Dato obligatorio",
-    });
-  if (!email)
-    return res.status(400).json({
-      error: "Falta el email del paciente. Dato obligatorio",
-    });
-  if (!telefono)
-    return res.status(400).json({
-      error: "Falta el telefono del paciente. Dato obligatorio",
-    });
-  if (!direccion)
-    return res.status(400).json({
-      error: "Falta la dirección del paciente. Dato obligatorio",
-    });
-  if (!enfermedades)
-    return res.status(400).json({
-      error: "Falta detallar las enfermedades del paciente. Dato obligatorio",
-    });
-  if (!medicamentos)
-    return res.status(400).json({
-      error:
-        "Falta detallar que medicamentos toma el paciente. Dato obligatorio",
-    });
-  if (!alergias)
-    return res.status(400).json({
-      error: "Falta detallar que alergias tiene el paciente. Dato obligatorio",
-    });
+  if (![full_name, dni, gender, age, birthday, phone, address].every(Boolean))
+    return res.status(404).json({ error: "Falta enviar datos obligatorios" });
 
   next();
 };
@@ -142,7 +52,7 @@ const validatorCreatePatient = (req, res, next) => {
 // *Validador para actualizar al registro de un paciente:
 const validatorUpdatePatient = (req, res, next) => {
   const { id } = req.body;
-  if (!id) return res.status(400).json({ error: "Falta el id" });
+  if (!id) return res.status(404).json({ error: "Falta el id" });
   next();
 };
 
@@ -150,5 +60,5 @@ module.exports = {
   validatorCreateDoctor,
   validatorUpdateDoctor,
   validatorCreatePatient,
-  validatorUpdatePatient
+  validatorUpdatePatient,
 };

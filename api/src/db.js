@@ -81,10 +81,6 @@ TicketMedical.belongsTo(Schedule);
 TicketAnalysis.hasOne(Payment);
 Payment.belongsTo(TicketAnalysis);
 
-// ?Doctor vs Schedule = 1 : 1
-Doctor.hasOne(Schedule);
-Schedule.belongsTo(Doctor);
-
 // *Relaciones 1 a N:
 // ?Patient vs TicketMedical = 1 : N
 Patient.hasMany(TicketMedical);
@@ -130,6 +126,10 @@ Doctor.belongsTo(User);
 // ?Doctor vs Speciality = N : N
 Doctor.belongsToMany(Speciality);
 Speciality.belongsToMany(Doctor);
+
+// ?Doctor vs Schedule = N : N
+Doctor.belongsToMany(Schedule);
+Schedule.belongsToMany(Doctor);
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

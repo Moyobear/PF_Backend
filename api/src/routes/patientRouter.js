@@ -1,31 +1,33 @@
 const { Router } = require("express");
 const {
-  validadorCreatePaciente,
-  validadorUpdatePaciente,
+  validatorCreatePatient,
+  validatorUpdatePatient,
 } = require("../middlewares/validators.js");
 
 const {
-  getPacientesHandler,
-  getDniPacienteHandler,
-  getPacienteIdHandler,
-  createPacienteHandler,
-  updatePacienteHandler,
-  deletePacienteHandler,
-} = require("../handlers/pacienteHandlers/pacienteHandlers.js");
+  getPatientsHandler,
+  getDniPatientHandler,
+  getPatientIdHandler,
+  createPatientHandler,
+  updatePatientHandler,
+  deletePatientHandler,
+} = require("../handlers/patientHandlers/patientHandlers.js");
 
 // *Acá definimos las rutas de pacientes:
-const pacienteRouter = Router();
+const patientRouter = Router();
 
-pacienteRouter.get("/", getPacientesHandler);
+// TODO: rutas para setear los turnos de los ticketMedical y establecerlos en la tabla patient.
 
-pacienteRouter.get("/dni", getDniPacienteHandler);
+patientRouter.get("/", getPatientsHandler);
 
-pacienteRouter.get("/:id", getPacienteIdHandler);
+patientRouter.get("/dni", getDniPatientHandler);
 
-pacienteRouter.post("/", validadorCreatePaciente, createPacienteHandler);
+patientRouter.get("/:id", getPatientIdHandler);
 
-pacienteRouter.put("/", validadorUpdatePaciente, updatePacienteHandler);
+patientRouter.post("/", validatorCreatePatient, createPatientHandler);
 
-pacienteRouter.delete("/:id/delete", deletePacienteHandler);
+patientRouter.put("/", validatorUpdatePatient, updatePatientHandler);
 
-module.exports = pacienteRouter;
+patientRouter.delete("/:id/delete", deletePatientHandler);
+
+module.exports = patientRouter;

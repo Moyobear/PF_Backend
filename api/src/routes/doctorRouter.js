@@ -11,10 +11,15 @@ const {
   createDoctorHandler,
   updateDoctorHandler,
   deleteDoctorHandler,
-} = require("../handlers/medicoHandlers/doctorHandlers.js");
+  updateScheduleDoctorHandler,
+} = require("../handlers/doctorHandlers/doctorHandlers.js");
 
 // *Acá definimos las rutas de medicos:
 const doctorRouter = Router();
+
+// TODO: rutas para setear los horarios de los tickets y establecerlos en la tabla schedule.
+
+doctorRouter.put("/shedule", updateScheduleDoctorHandler);
 
 doctorRouter.get("/names", getNamesHandler);
 
