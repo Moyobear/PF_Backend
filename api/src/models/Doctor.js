@@ -10,12 +10,12 @@ module.exports = (sequelize) => {
         primaryKey: true,
         unique: true,
       },
-      code: {
+      dni: {
         type: DataTypes.INTEGER,
         allowNull: false,
         unique: true,
       },
-      dni: {
+      code: {
         type: DataTypes.INTEGER,
         allowNull: false,
         unique: true,

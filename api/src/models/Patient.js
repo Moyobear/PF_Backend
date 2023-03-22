@@ -4,10 +4,15 @@ module.exports = (sequelize) => {
   sequelize.define(
     "patient",
     {
-      dni: {
+      id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         primaryKey: true,
+        unique: true,
+      },
+      dni: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
         unique: true,
       },
       full_name: {

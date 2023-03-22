@@ -155,13 +155,6 @@ const deleteDoctor = async (id) => {
   return "El Médico fue borrado exitosamente";
 };
 
-// *Este controller setea el horario del doctor:
-const updateScheduleDoctor = async (idDoctor, schedule) => {
-  const requestDoctor = await getDoctorById(idDoctor)
-  const requestSchedule = await Schedule.create({})
-
-}
-
 module.exports = {
   getAllNames,
   searchDoctorByName,
