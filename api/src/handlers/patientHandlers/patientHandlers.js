@@ -66,9 +66,9 @@ const createPatientHandler = async (req, res) => {
 // *Handler para actualizar un paciente:
 const updatePatientHandler = async (req, res) => {
   try {
-    const { id, email, telefono, direccion } = req.body;
+    const { id, phone, address } = req.body;
 
-    const request = await updatePatient(id, email, telefono, direccion);
+    const request = await updatePatient(id, phone, address);
     return res.status(201).json(request);
   } catch (error) {
     return res.status(400).json({ error: error.message });

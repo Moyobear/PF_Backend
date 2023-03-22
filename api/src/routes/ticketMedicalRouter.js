@@ -4,5 +4,6 @@ const { Router } = require("express");
 const ticketMedicalRouter = Router();
 
 // !POR DEFINIR...
+ticketMedicalRouter.post("/", ticketMedicalHandler);
 
 module.exports = ticketMedicalRouter;

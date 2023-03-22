@@ -1,9 +1,10 @@
-const { Doctor, Speciality, Schedule } = require("../../db");
+const { Doctor, Speciality, Schedule, User } = require("../../db");
 const { Op } = require("sequelize");
 
 // *Helper para estructurar la info que recibimos de la base de datos y enviarla al front:
 let filterDB = (item) => {
   return {
+    id: item.id,
     dni: item.dni,
     code: item.code,
     full_name: item.full_name,
@@ -16,7 +17,7 @@ let filterDB = (item) => {
     image: item.image,
     is_delete: item.is_delete,
     schedule: item.Schedule,
-    user: item.user,
+    user: item.User,
   };
 };
 
@@ -31,6 +32,10 @@ const getDoctors = async () => {
     include: {
       model: Schedule,
       through: { attributes: [] },
+    },
+    include: {
+      model: User,
+      // through: { attributes: [] },
     },
   });
   let filtered = request
@@ -58,6 +63,14 @@ const searchDoctorByName = async (full_name) => {
       model: Speciality,
       attributes: ["speciality"],
       through: { attributes: [] },
+    },
+    include: {
+      model: Schedule,
+      through: { attributes: [] },
+    },
+    include: {
+      model: User,
+      // through: { attributes: [] },
     },
   });
   if (request && request.is_delete === false) {
@@ -131,7 +144,21 @@ const createDoctor = async (
 
 // *Este controller permite actualizar un médico buscándolo por id:
 const updateDoctor = async (id, phone, address, image) => {
-  const request = await Doctor.findByPk(id);
+  const request = await Doctor.findByPk(id, {
+    include: {
+      model: Speciality,
+      attributes: ["speciality"],
+      through: { attributes: [] },
+    },
+    include: {
+      model: Schedule,
+      through: { attributes: [] },
+    },
+    include: {
+      model: User,
+      // through: { attributes: [] },
+    },
+  });
   request.set({
     phone: phone,
     address: address,
