@@ -10,9 +10,11 @@ const {
 // *Acá definimos las rutas de plan:
 const planRouter = Router();
 
-// !POR DEFINIR...
 
-// 
-planRouter.get("/", )
+planRouter.get("/", getPlansHandler)
+planRouter.get("/:id", getPlanByIdHandler)
+planRouter.put("/", updatePlanHandler)
+planRouter.post("/", addPlanHandler)
+planRouter.delete("/:id", deletePlanHandler)
 
 module.export = planRouter;
