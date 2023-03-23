@@ -17,7 +17,7 @@ const createSpeciality = async (params) => {
     return {
         message: "El registro de especialidad se ha creado exitosamente"
     };
-}
+};
 
 
 // changeSpeciality modifica el valor de la tabla Speciality
