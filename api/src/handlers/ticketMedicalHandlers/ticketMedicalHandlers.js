@@ -1,5 +1,6 @@
 const {
   createTicket,
+  confirmTicket,
 } = require("../../controllers/ticketMedicalControllers/ticketMedicalControllers.js");
 
 const ticketMedicalHandler = async (req, res) => {
@@ -28,6 +29,17 @@ const ticketMedicalHandler = async (req, res) => {
   }
 };
 
+const confirmTicketHandler = async (req, res) => {
+  try {
+    const { ticketId } = req.body;
+    const request = await confirmTicket(ticketId);
+    return res.status(201).json(request);
+  } catch (error) {
+    return req.status(404).json({ error: error.message });
+  }
+};
+
 module.exports = {
   ticketMedicalHandler,
+  confirmTicketHandler,
 };

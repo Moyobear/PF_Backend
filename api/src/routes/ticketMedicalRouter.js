@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const ticketMedicalHandler = require("../handlers/ticketMedicalHandlers/ticketMedicalHandlers.js");
+const {ticketMedicalHandler, confirmTicketHandler} = require("../handlers/ticketMedicalHandlers/ticketMedicalHandlers.js");
 const {
   validatorCreateTicketMedical,
 } = require("../middlewares/validators.js");
@@ -12,5 +12,7 @@ ticketMedicalRouter.post(
   validatorCreateTicketMedical,
   ticketMedicalHandler
 );
+
+ticketMedicalRouter.put("/confirmTicket", confirmTicketHandler)
 
 module.exports = ticketMedicalRouter;

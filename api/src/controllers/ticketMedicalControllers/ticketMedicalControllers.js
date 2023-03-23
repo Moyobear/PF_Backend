@@ -22,6 +22,8 @@ const createTicket = async (
   await doctor.addSchedule(requestSchedule);
   await doctor.save();
 
+  await TicketMedical.setSchedule(requestSchedule);
+
   const patient = await Patient.findByPk(patientId);
   await patient.addTicketmedical(requestTicket);
   await patient.save();
@@ -29,8 +31,23 @@ const createTicket = async (
   return;
 };
 
+// *Este controller permite setear la propiedad "is_confirmed" de un ticket a "true" y eliminar esa info de la tabla schedule de un doctor.
+const confirmTicket = async (ticketId) => {
+  const request = await TicketMedical.findByPk(ticketId);
+  request.set({
+    is_confirmed: true,
+  });
+  await request.save();
+
+  const associatedSchedule = await request.getSchedule();
+  await associatedSchedule.destroy();
+
+  return "El turno ha sido confirmado exitosamente";
+};
+
 module.exports = {
   createTicket,
+  confirmTicket,
 };
 
 // TODO: auth0, firebase, supabase

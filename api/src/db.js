@@ -74,8 +74,8 @@ const {
 // *Aca vendrian las relaciones:
 // *Relaciones 1 a 1:
 // ?Schedule vs TicketMedical = 1 : 1
-Schedule.hasOne(TicketMedical);
-TicketMedical.belongsTo(Schedule);
+TicketMedical.hasOne(Schedule);
+Schedule.belongsTo(TicketMedical);
 
 // ?TicketAnalysis vs Payment = 1 : 1
 TicketAnalysis.hasOne(Payment);
