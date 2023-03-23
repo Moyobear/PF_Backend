@@ -6,7 +6,7 @@ const {
   createPatient,
   updatePatient,
   deletePatient,
-} = require("../../controllers/pacienteControllers/pacienteControllers.js");
+} = require("../../controllers/patientControllers/patientControllers.js");
 
 // *Handler para buscar un paciente por nombre o para traerlos todos:
 const getPatientsHandler = async (req, res) => {
