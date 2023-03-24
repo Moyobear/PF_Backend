@@ -11,7 +11,7 @@ const {
 
 const specialityRouter = Router();
 
-specialityRouter.get("/speciality", GET_SPECIALITY)
+specialityRouter.get("/", GET_SPECIALITY)
 
 
 specialityRouter.post("/create", POST_SPECIALITY)

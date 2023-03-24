@@ -12,4 +12,4 @@ const paidsRouter = Router();
 paidsRouter.get("/", getPaidsHandler)
 paidsRouter.get("/:id", getPaidByIdHandler)
 
-module.export = paidsRouter;
+module.exports = paidsRouter;

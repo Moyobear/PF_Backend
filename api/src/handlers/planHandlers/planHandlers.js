@@ -6,7 +6,7 @@ const {
     deletePlan
 } = require("../../controllers/planControllers/planControllers.js")
 
-const getPlansHandler = async () => {
+const getPlansHandler = async (req, res) => {
     const { code } = req.query
     try {
         const plan = code ? await getPlanByCode(code)
@@ -18,7 +18,7 @@ const getPlansHandler = async () => {
     }
 }
 
-const getPlanByIdHandler = async () => {
+const getPlanByIdHandler = async (req, res) => {
     const { id } = req.params
     try {
         const plan = await getPlanById(id);
@@ -28,7 +28,7 @@ const getPlanByIdHandler = async () => {
     }
 }
 
-const updatePlanHandler = async () => {
+const updatePlanHandler = async (req, res) => {
     const { id, name, members, price, description, code, consultations_per_patients } = req.body;
 
     try {
@@ -39,7 +39,7 @@ const updatePlanHandler = async () => {
     }
 }
 
-const addPlanHandler = async () => {
+const addPlanHandler = async (req, res) => {
     const { name, members, price, description, code, consultations_per_patients } = req.body;
     try{
         if(!name || !members || !price || !description || !code || !consultations_per_patients){
@@ -54,7 +54,7 @@ const addPlanHandler = async () => {
     }
 }
 
-const deletePlanHandler = async () => {
+const deletePlanHandler = async (req, res) => {
     const { id } = req.params;
     try {
         const result = await deletePlan(id);

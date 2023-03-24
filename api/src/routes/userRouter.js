@@ -9,7 +9,7 @@ const {GET_USER,
 
 const userRouter = Router();
 
-userRouter.get('/user', GET_USER)
+userRouter.get('/', GET_USER)
 
 userRouter.post('/create', POST_USER)
 
@@ -19,4 +19,4 @@ userRouter.delete('/delete', DELETE_USER)
 
 // !POR DEFINIR...
 
-module.export = userRouter;
+module.exports = userRouter;

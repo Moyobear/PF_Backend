@@ -17,4 +17,4 @@ planRouter.put("/", updatePlanHandler)
 planRouter.post("/", addPlanHandler)
 planRouter.delete("/:id", deletePlanHandler)
 
-module.export = planRouter;
+module.exports = planRouter;

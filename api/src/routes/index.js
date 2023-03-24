@@ -19,8 +19,8 @@ router.use("/patient", patientRouter);
 router.use("/ticketMedical", ticketMedicalRouter);
 router.use("/payment", paymentRouter)
 router.use("/plan", planRouter)
-Router.use("/speciality", specialityRouter)
-Router.use("/analysis", ticketAnalysisRouter)
-Router.use("/user", userRouter)
+router.use("/speciality", specialityRouter)
+router.use("/analysis", ticketAnalysisRouter)
+router.use("/user", userRouter)
 
 module.exports = router;
