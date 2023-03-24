@@ -11,13 +11,13 @@ const {
   createDoctorHandler,
   updateDoctorHandler,
   deleteDoctorHandler,
-  updateScheduleDoctorHandler,
+
 } = require("../handlers/doctorHandlers/doctorHandlers.js");
 
 // *Acá definimos las rutas de medicos:
 const doctorRouter = Router();
 
-doctorRouter.put("/shedule", updateScheduleDoctorHandler);
+
 
 doctorRouter.get("/names", getNamesHandler);
 

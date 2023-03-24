@@ -25,6 +25,7 @@ const createSpeciality = async (params) => {
 }
 
 
+
 // changeSpeciality modifica el valor de la tabla Speciality
 
 const changeSpeciality = async (id, newSpeciality) => {

@@ -191,5 +191,5 @@ module.exports = {
   createDoctor,
   updateDoctor,
   deleteDoctor,
-  updateScheduleDoctor,
+  
 };
