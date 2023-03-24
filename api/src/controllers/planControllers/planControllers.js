@@ -1,5 +1,5 @@
 const { Plan } = require("../../db")
-const { Op } = requere("sequelize")
+const { Op } = require("sequelize")
 
 
 const getPlanAll = async () => {
