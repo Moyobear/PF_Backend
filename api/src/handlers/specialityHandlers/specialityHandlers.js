@@ -3,7 +3,7 @@ const {
     createSpeciality,
     changeSpeciality,
     deleteSpeciality
-} = require('../../controllers/specialityControllers.js')
+} = require('../../controllers/specialityControllers/specialityControllers.js')
 
 const GET_SPECIALITY = async (req, res) => {
         const data = await getSpeciality()
