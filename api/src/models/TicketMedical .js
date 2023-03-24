@@ -23,7 +23,7 @@ module.exports = (sequelize) => {
         type: DataTypes.DATEONLY,
         allowNull: false,
       },
-      hour: {
+      hour_start: {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true,

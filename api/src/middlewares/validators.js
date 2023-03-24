@@ -56,9 +56,38 @@ const validatorUpdatePatient = (req, res, next) => {
   next();
 };
 
+// *Validador para crear a un turno médico:
+const validatorCreateTicketMedical = (req, res, next) => {
+  const {
+    title,
+    observations,
+    doctorId,
+    patientId,
+    date,
+    hour_start,
+    hour_end,
+  } = req.body;
+
+  if (
+    ![
+      title,
+      observations,
+      doctorId,
+      patientId,
+      date,
+      hour_start,
+      hour_end,
+    ].every(Boolean)
+  )
+    return res.status(404).json({ error: "Falta enviar datos obligatorios" });
+
+  next();
+};
+
 module.exports = {
   validatorCreateDoctor,
   validatorUpdateDoctor,
   validatorCreatePatient,
   validatorUpdatePatient,
+  validatorCreateTicketMedical,
 };
