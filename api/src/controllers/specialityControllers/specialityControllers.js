@@ -1,4 +1,5 @@
 const { Speciality } = require("../../db")
+const { Op } = require("sequelize");
 
 
 //getSpeciality devuelve todos los campos que tenga la tabla Speciality
@@ -11,12 +12,16 @@ const getSpeciality = async () => {
 // createSpeciality permite crear mas especialidades en la tabla Speciality
 
 const createSpeciality = async (params) => {
-    const nuevaSpeciality = await Speciality.create({
+    if (params) {
+        const nuevaSpeciality = await Speciality.create({
         speciality: params.speciality
     });
     return {
         message: "El registro de especialidad se ha creado exitosamente"
-    };
+    }; 
+    }else { throw new Error("Necesita parametros para crear el registro de especialidad")
+    }
+   
 }
 
 
@@ -38,10 +43,8 @@ const changeSpeciality = async (id, newSpeciality) => {
         return {
             message: `Se ha actualizado la especialidad con id ${id} exitosamente`
         };
-    } else {
-        return {
-            message: `No se ha encontrado la especialidad con id ${id}`
-        };
+    } else { throw new Error (`No se ha encontrado la especialidad con id ${id}`)
+        ;
     }
 };
 
@@ -58,10 +61,7 @@ const deleteSpeciality = async (params) => {
         return {
             message: `Se ha eliminado la especialidad ${params.speciality} exitosamente`
         };
-    } else {
-        return {
-            message: `No se ha encontrado la especialidad ${params.speciality}`
-        };
+    } else { throw new Error (`No se ha encontrado la especialidad ${params.speciality}`)
     }
 
 }
