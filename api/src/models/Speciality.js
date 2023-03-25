@@ -14,6 +14,7 @@ module.exports = (sequelize) => {
       speciality: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true,
       },
     },
     { timestamps: false }

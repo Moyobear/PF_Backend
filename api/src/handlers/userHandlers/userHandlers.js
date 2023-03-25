@@ -1,4 +1,4 @@
-const {getAllUser, createUser, isAdmin, deleteUser,} = require('../../controllers/userController/userController')
+const {getAllUser, createUser, isAdmin, deleteUser} = require('../../controllers/userController/userController')
 
 
 const GET_USER = async (req, res) => {
@@ -8,8 +8,8 @@ const GET_USER = async (req, res) => {
 
 const POST_USER = async (req, res) => {
     try {
-        const {full_name, email, password, user_name, image, is_plan_pay} = req.body
-        const data = await createUser(full_name, email, password, user_name, image, is_plan_pay)
+        const {full_name, email, password, user_name, image} = req.body
+        const data = await createUser(full_name, email, password, user_name, image)
         res.status(200).json(data)
     } catch (error) {
         res.status(400).json({error: error.message})
