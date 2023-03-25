@@ -1,4 +1,4 @@
-const {User} = require("../../models/User")
+const {User,Plan} = require("../../db.js")
 const {Op}= require("sequelize")
 
 /* 
@@ -56,8 +56,8 @@ const getAllUser = async () =>{
     let filtered = request
     .map((item) => filterUserDB(item))
     .filter((item) => item.is_delete !== true)
-    .flatMap();
-//flatMap() se utiliza para aplicar una función a cada elemento de un array y luego aplanar el resultado en un único array
+    .flat();
+
 
   return filtered;   
 }
@@ -70,24 +70,22 @@ const createUser = async (
     password,
     user_name,
     image,
-    is_plan_pay
 )  => {
 
     // funciona o hay que hacer un anderson?? &&
 
-    if ( full_name,
-        email,
-        password,
-        user_name,
-        image,
-        is_plan_pay) {
+    if ( full_name &&
+        email &&
+        password &&
+        user_name &&
+        image) {
        const request = await User.create({
-    full_name,
-    email,
-    password,
-    user_name,
-    image,
-    is_plan_pay
+    full_name: full_name,
+    email: email,
+    password: password,
+    user_name: user_name,
+    image: image,
+    is_plan_pay:false
     }) 
     return { message : 'El Usuario a sido creado con exito'}
 
@@ -98,7 +96,9 @@ const createUser = async (
 const isAdmin = async (id, boolean ) =>{
     
     // esto hace que la app nunca se quede sin admin, siempre tiene que existir uno almenos 
-    const countAdmins = await getAllUser.reducer(
+    let allUser = await getAllUser()
+    console.log(allUser);
+    const countAdmins = allUser.reduce(
         (count, item) => count + (item.is_admin === true ? 1 : 0),
         0
     )
@@ -157,3 +157,6 @@ module.exports = {
     isAdmin,
     deleteUser,
 }
+
+
+

@@ -1,6 +1,7 @@
 const {
     getPlanAll,
     getPlanByCode,
+    getPlanById,
     updatePlan,
     addPlan,
     deletePlan
@@ -32,9 +33,10 @@ const updatePlanHandler = async (req, res) => {
     const { id, name, members, price, description, code, consultations_per_patients } = req.body;
 
     try {
-        const response = await updatePlan(id);
+        const response = await updatePlan(id, name, members, price, description, code, consultations_per_patients);
         return res.status(200).json(response)
     } catch (error) {
+        console.log(error)
         return res.status(400).json({error: error})
     }
 }

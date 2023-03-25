@@ -11,11 +11,11 @@ const userRouter = Router();
 
 userRouter.get('/', GET_USER)
 
-userRouter.post('/create', POST_USER)
+userRouter.post('/', POST_USER)
 
 userRouter.put('/isAdmin', PUT_ISADMIN)
 
-userRouter.delete('/delete', DELETE_USER)
+userRouter.delete('/', DELETE_USER)
 
 // !POR DEFINIR...
 

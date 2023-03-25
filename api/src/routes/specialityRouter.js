@@ -14,13 +14,13 @@ const specialityRouter = Router();
 specialityRouter.get("/", GET_SPECIALITY)
 
 
-specialityRouter.post("/create", POST_SPECIALITY)
+specialityRouter.post("/", POST_SPECIALITY)
 
 
-specialityRouter.put("/change", PUT_SPECIALITY)
+specialityRouter.put("/", PUT_SPECIALITY)
 
 
-specialityRouter.delete("/delete", DELETE_SPECIALITY)
+specialityRouter.delete("/", DELETE_SPECIALITY)
 
 
 module.exports = specialityRouter;
