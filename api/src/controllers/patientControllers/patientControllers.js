@@ -1,71 +1,43 @@
 const { Patient, TicketMedical, User, Plan } = require("../../db");
 const { Op } = require("sequelize");
 
-// *Helper para estructurar la info que recibimos de la base de datos y enviarla al front:
-let filterPatientDB = (item) => {
-  return {
-    id: item.id,
-    full_name: item.full_name,
-    dni: item.dni,
-    gender: item.gender,
-    age: item.age,
-    birthday: item.birthday,
-    phone: item.phone,
-    address: item.address,
-    user: item.User,
-    consultations_per_plan: item.Plan,
-    ticketMedical: item.TicketMedical,
-    is_delete: item.is_delete,
-  };
-};
-
 // *Este helper nos permite traer los Pacientes de la base de datos e implementarlo en las rutas que lo requieran:
 const getPatients = async () => {
   const request = await Patient.findAll({
-    include: {
-      model: TicketMedical,
-      // through: { attributes: [] },
-    },
-    include: {
-      model: User,
-      attributes: ["full_name"],
-      // through: { attributes: [] },
-    },
-    include: {
-      model: Plan,
-      attributes: ["consultations_per_plan"],
-      // through: { attributes: [] },
-    },
+    include: [
+      {
+        model: TicketMedical,
+      },
+      {
+        model: User,
+      },
+      {
+        model: Plan,
+      },
+    ],
   });
-  let filtered = request
-    .map((item) => filterPatientDB(item))
-    .filter((item) => item.is_delete !== true)
-    .flat();
+  let filtered = request.filter((item) => item.is_delete !== true);
   return filtered;
 };
 
 // *Este controller busca a un paciente por nombre:
 const searchPatientByName = async (full_name) => {
   const request = await Patient.findOne({
-    where: { name: { [Op.iLike]: `%${full_name}%` } },
-    include: {
-      model: TicketMedical,
-      // through: { attributes: [] },
-    },
-    include: {
-      model: User,
-      attributes: ["full_name"],
-      // through: { attributes: [] },
-    },
-    include: {
-      model: Plan,
-      attributes: ["consultations_per_plan"],
-      // through: { attributes: [] },
-    },
+    where: { full_name: { [Op.iLike]: `%${full_name}%` } },
+    include: [
+      {
+        model: TicketMedical,
+      },
+      {
+        model: User,
+      },
+      {
+        model: Plan,
+      },
+    ],
   });
   if (request && request.is_delete === false) {
-    let filtered = filterDB(request);
-    return [filtered];
+    return [request];
   } else {
     return "No existe Paciente con ese nombre";
   }
@@ -79,33 +51,65 @@ const getAllPatients = async () => {
 
 // *Este controller busca a un paciente por DNI:
 const findDniPatient = async (dni) => {
-  const request = await getPatients();
-  let search = request.filter((item) => item.dni === dni);
-  if (!search) {
-    return "No existe Paciente con ese DNI";
+  const request = await Patient.findOne({
+    where: { dni: dni },
+    include: [
+      {
+        model: TicketMedical,
+      },
+      {
+        model: User,
+      },
+      {
+        model: Plan,
+      },
+    ],
+  });
+
+  if (request && request.is_delete === false) {
+    return request;
   } else {
-    return [search];
+    return "No existe Paciente con ese DNI";
   }
 };
 
 // *Este controller busca a un paciente por id:
 const getPatientById = async (id) => {
-  const request = await getPatients();
-  const patient = request.filter((item) => item.id === id);
-  return patient[0];
+  const request = await Patient.findByPk(id, {
+    include: [
+      {
+        model: TicketMedical,
+      },
+      {
+        model: User,
+      },
+      {
+        model: Plan,
+      },
+    ],
+  });
+
+  if (request && request.is_delete === false) {
+    return request;
+  } else {
+    return "No existe Paciente con ese Id";
+  }
 };
 
 // *Este controller permite crear un paciente:
 const createPatient = async (
+  idUser,
+  planId,
   full_name,
   dni,
   gender,
   age,
   birthday,
   phone,
-  address
+  address,
+  consultations_available
 ) => {
-  const request = await Patient.create({
+  const patient = await Patient.create({
     full_name,
     dni,
     gender,
@@ -113,8 +117,29 @@ const createPatient = async (
     birthday,
     phone,
     address,
+    consultations_available,
   });
-  const patient_created = await findDniPaciente(dni);
+
+  const user = await User.findByPk(idUser);
+  await patient.setUser(user);
+
+  const plan = await Plan.findByPk(planId);
+  await patient.setPlan(plan);
+
+  const patient_created = await Patient.findOne({
+    where: { full_name: { [Op.iLike]: `%${full_name}%` } },
+    include: [
+      {
+        model: TicketMedical,
+      },
+      {
+        model: User,
+      },
+      {
+        model: Plan,
+      },
+    ],
+  });
 
   return {
     message: "El registro del paciente se ha creado exitosamente",
@@ -124,22 +149,7 @@ const createPatient = async (
 
 // *Este controller permite actualizar un paciente buscándolo por id:
 const updatePatient = async (id, phone, address) => {
-  const request = await Paciente.findByPk(id, {
-    include: {
-      model: TicketMedical,
-      // through: { attributes: [] },
-    },
-    include: {
-      model: User,
-      attributes: ["full_name"],
-      // through: { attributes: [] },
-    },
-    include: {
-      model: Plan,
-      attributes: ["consultations_per_plan"],
-      // through: { attributes: [] },
-    },
-  });
+  const request = await Paciente.findByPk(id);
   request.set({
     phone: phone,
     address: address,
@@ -147,8 +157,7 @@ const updatePatient = async (id, phone, address) => {
 
   await request.save();
 
-  let filtered = filterPatientDB(request);
-  return filtered;
+  return request;
 };
 
 // *Este controller elimina un paciente por id:

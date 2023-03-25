@@ -12,6 +12,7 @@ const {
 const getPatientsHandler = async (req, res) => {
   try {
     const { full_name } = req.query;
+    console.log(full_name);
     const request = full_name
       ? await searchPatientByName(full_name)
       : await getAllPatients();
@@ -25,7 +26,7 @@ const getPatientsHandler = async (req, res) => {
 const getDniPatientHandler = async (req, res) => {
   try {
     const { dni } = req.body;
-    const request = findDniPatient(dni);
+    const request = await findDniPatient(dni);
     return res.status(200).json(request);
   } catch (error) {
     return res.status(400).json({ error: error.message });
@@ -47,15 +48,29 @@ const getPatientIdHandler = async (req, res) => {
 // *Handler para crear un paciente:
 const createPatientHandler = async (req, res) => {
   try {
-    const { full_name, dni, gender, age, birthday, phone, address } = req.body;
-    const request = await createPatient(
+    const {
+      idUser,
+      planId,
       full_name,
       dni,
       gender,
       age,
       birthday,
       phone,
-      address
+      address,
+      consultations_available,
+    } = req.body;
+    const request = await createPatient(
+      idUser,
+      planId,
+      full_name,
+      dni,
+      gender,
+      age,
+      birthday,
+      phone,
+      address,
+      consultations_available
     );
     return res.status(201).json(request);
   } catch (error) {

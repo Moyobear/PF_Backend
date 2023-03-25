@@ -19,7 +19,9 @@ const getDoctors = async () => {
     ],
   });
 
-  return request;
+  let filtered = request.filter((item) => item.is_delete !== true);
+
+  return filtered;
 };
 
 // *Este controller busca a un paciente por nombre:
@@ -77,7 +79,7 @@ const findDni = async (dni) => {
     ],
   });
 
-  if (request) {
+  if (request && request.is_delete === false) {
     return request;
   } else {
     return "No existe Médico con ese DNI";
@@ -107,8 +109,11 @@ const getDoctorById = async (id) => {
       },
     ],
   });
-
-  return request;
+  if (request && request.is_delete === false) {
+    return [request];
+  } else {
+    return "No existe Médico con ese Id";
+  }
 };
 
 // *Este controller permite crear un médico:
@@ -172,7 +177,6 @@ const updateDoctor = async (id, phone, address, image) => {
 // *Este controller elimina un médico por id:
 const deleteDoctor = async (id) => {
   const request = await Doctor.findByPk(id);
-
   request.set({
     is_delete: true,
   });
