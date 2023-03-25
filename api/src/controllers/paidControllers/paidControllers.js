@@ -28,15 +28,28 @@ const getPaidById = async (id) => {
     return paid;
 }
 
-const updatePaidById = async (id, check) => {
+const updatePaidById = async (id, period, cutoff_date, date_pay, price, check, userId, planId) => {
     const paid = await Paids.findByPk(id);
     if(!paid) throw Error(`No existe ticket con el id = ${id}`)
 
-    paid.check = check;
+    paid.set({
+        period,
+        cutoff_date,
+        date_pay,
+        price,
+        check,
+        userId,
+        planId
+    })
     await paid.save()
 
     return paid
 }   
+
+const addPaid = async (period, cutoff_date, date_pay, price, check, userId, planId) => {
+    const paid = await Paids.create({period, cutoff_date, date_pay, price, check, userId, planId})
+    return paid;
+}
 
 
 module.exports = {
@@ -44,5 +57,6 @@ module.exports = {
     getPaidsByUserId,
     getPaidsByPlanId,
     getPaidById,
-    updatePaidById
+    updatePaidById,
+    addPaid
 }

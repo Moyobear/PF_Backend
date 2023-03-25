@@ -3,7 +3,8 @@ const {
     getPaidsHandler,
     getPaidByIdHandler,
     getPaidsByUserHandler,
-    updateByIdHandler
+    updateByIdHandler,
+    createPaidHandler
 } = require("../handlers/paidHandlers/paidHandlers.js")
 
 // *Acá definimos las rutas de usuarios:
@@ -15,5 +16,6 @@ paidsRouter.get("/", getPaidsHandler)
 paidsRouter.get("/:id", getPaidByIdHandler)
 paidsRouter.get("/:userId/", getPaidsByUserHandler)
 paidsRouter.put("/", updateByIdHandler)
+paidsRouter.post("/", createPaidHandler)
 
 module.exports = paidsRouter;
