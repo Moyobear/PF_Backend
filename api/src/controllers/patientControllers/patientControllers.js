@@ -142,7 +142,7 @@ const updatePatient = async (id, phone, address) => {
   });
   request.set({
     phone: phone,
-    address: phone,
+    address: address,
   });
 
   await request.save();
