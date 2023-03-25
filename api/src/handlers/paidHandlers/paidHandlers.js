@@ -3,7 +3,8 @@ const {
     getPaidsByUserId,
     getPaidsByPlanId,
     getPaidById,
-    updatePaidById
+    updatePaidById,
+    addPaid
 } = require("../../controllers/paidControllers/paidControllers.js")
 
 
@@ -11,11 +12,11 @@ const getPaidsHandler = async (req, res) => {
     const { planId } = req.query
 
     try {
-        const paids = plan ? await getPaidsByPlanId(planId)
+        const paids = planId ? await getPaidsByPlanId(planId)
                            : await getPaidsAll();
         res.status(200).json(paids)
-    } catch (erro ){
-        res.status(400).json({error: error})
+    } catch (error ){
+        res.status(400).json({error: error.message})
     }   
 }
 
@@ -39,10 +40,10 @@ const getPaidByIdHandler = async (req, res) => {
     }
 }
 
-const updateByIdHandler = async () => {
-    const { id, check } = req.body;
+const updateByIdHandler = async (req, res) => {
+    const { id, period, cutoff_date, date_pay, price, check, userId, planId } = req.body;
     try{
-        const paid = await updatePaidById(id, check);
+        const paid = await updatePaidById(id, period, cutoff_date, date_pay, price, check, userId, planId );
         return res.status(200).json(paid)
     } catch (error) {
         return res.status(400).json({error: error.message})
@@ -50,9 +51,20 @@ const updateByIdHandler = async () => {
 
 }
 
+const createPaidHandler = async (req, res) => {
+    const {period, cutoff_date, date_pay, price, check, userId, planId} = req.body;
+    try{
+        const paid = await addPaid(period, cutoff_date, date_pay, price, check, userId, planId);
+        return res.status(200).json(paid)
+    } catch (error) {
+        return res.status(400).json({error: error.message})
+    }
+}
+
 module.exports = {
     getPaidsHandler,
     getPaidByIdHandler,
     getPaidsByUserHandler,
-    updateByIdHandler
+    updateByIdHandler,
+    createPaidHandler
 }
