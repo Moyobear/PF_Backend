@@ -12,7 +12,9 @@ const getSpeciality = async () => {
 // createSpeciality permite crear mas especialidades en la tabla Speciality
 
 const createSpeciality = async (params) => {
+    //console.log(params);
     if (params) {
+        console.log(params);
         const nuevaSpeciality = await Speciality.create({
         speciality: params.speciality
     });
@@ -28,26 +30,18 @@ const createSpeciality = async (params) => {
 
 // changeSpeciality modifica el valor de la tabla Speciality
 
-const changeSpeciality = async (id, newSpeciality) => {
-    const result = await Speciality.update(
-        {
-            speciality: newSpeciality
-        },
-        {
-            where: {
-                id: id
-            }
-        }
-    );
-
-    if (result[0] === 1) {
-        return {
-            message: `Se ha actualizado la especialidad con id ${id} exitosamente`
-        };
-    } else { throw new Error (`No se ha encontrado la especialidad con id ${id}`)
-        ;
+const changeSpeciality = async (id, speciality) => {
+    //console.log(id, speciality,'controller');
+    const request = await Speciality.findByPk(id);
+    if (request) {
+      request.speciality = speciality;
+      await request.save();
+      //let filtered = filterDB(request);
+      return {message: "modificado con exito"}
+    } else {
+      throw new Error("Registro no encontrado");
     }
-};
+  };
 
 
 
