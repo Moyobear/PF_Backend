@@ -94,6 +94,7 @@ Json Doctores:
         "phone": 631498745,
         "address": "CABA, Argentina",
         "image": "https://ceslava.s3-accelerate.amazonaws.com/2016/04/mistery-man-gravatar-wordpress-avatar-persona-misteriosa-510x510.png",
+        "speciality": "neurología"
     },
     {
         "dni": 5469854,
@@ -105,6 +106,7 @@ Json Doctores:
         "phone": 79632548,
         "address": "Lanus, Argentina",
         "image": "https://ceslava.s3-accelerate.amazonaws.com/2016/04/mistery-man-gravatar-wordpress-avatar-persona-misteriosa-510x510.png",
+        "speciality": "obstetricia, ginecología"
     },
     {
         "dni": 26589874,
@@ -116,6 +118,7 @@ Json Doctores:
         "phone": 46859731,
         "address": "Tierra de Fuego, Argentina",
         "image": "https://ceslava.s3-accelerate.amazonaws.com/2016/04/mistery-man-gravatar-wordpress-avatar-persona-misteriosa-510x510.png",
+        "speciality": "cardiología"
     },
     {
         "dni": 65749137,
@@ -127,6 +130,7 @@ Json Doctores:
         "phone": 69854784,
         "address": "Banfield, Argentina",
         "image": "https://ceslava.s3-accelerate.amazonaws.com/2016/04/mistery-man-gravatar-wordpress-avatar-persona-misteriosa-510x510.png",
+        "speciality": "neumonología"
     },
     {
         "dni": 5784986,
@@ -138,6 +142,7 @@ Json Doctores:
         "phone": 74895684,
         "address": "El Rosario, Argentina",
         "image": "https://ceslava.s3-accelerate.amazonaws.com/2016/04/mistery-man-gravatar-wordpress-avatar-persona-misteriosa-510x510.png",
+        "speciality": "oftalmología"
     },
     {
         "dni": 3698754,
@@ -149,6 +154,7 @@ Json Doctores:
         "phone": 13655987,
         "address": "Almirante Brown, Argentina",
         "image": "https://ceslava.s3-accelerate.amazonaws.com/2016/04/mistery-man-gravatar-wordpress-avatar-persona-misteriosa-510x510.png",
+        "speciality": "pediatría"
     },
     {
         "dni": 4785965,
@@ -160,6 +166,7 @@ Json Doctores:
         "phone": 58749685,
         "address": "Lanus, Argentina",
         "image": "https://ceslava.s3-accelerate.amazonaws.com/2016/04/mistery-man-gravatar-wordpress-avatar-persona-misteriosa-510x510.png",
+        "speciality": "otorrinolaringología"
     },
     {
         "dni": 63528795,
@@ -171,6 +178,7 @@ Json Doctores:
         "phone": 87965487,
         "address": "San Justo, Argentina",
         "image": "https://ceslava.s3-accelerate.amazonaws.com/2016/04/mistery-man-gravatar-wordpress-avatar-persona-misteriosa-510x510.png",
+        "speciality": "clínica médica"
     },
     {
         "dni": 9896587,
@@ -182,6 +190,7 @@ Json Doctores:
         "phone": 124785946,
         "address": "Quilmes, Argentina",
         "image": "https://ceslava.s3-accelerate.amazonaws.com/2016/04/mistery-man-gravatar-wordpress-avatar-persona-misteriosa-510x510.png",
+        "speciality": "psiquiatría"
     },
     {
         "dni": 2569854,
@@ -193,6 +202,7 @@ Json Doctores:
         "phone": 32659854,
         "address": "San Isidro, Argentina",
         "image": "https://ceslava.s3-accelerate.amazonaws.com/2016/04/mistery-man-gravatar-wordpress-avatar-persona-misteriosa-510x510.png",
+        "speciality": "psiquiatría"
     },
 ]
 
@@ -207,4 +217,53 @@ Json TicketMedical:
         "hour_start": ,
         "hour_end": ,
     }
+]
+
+Json Especialidades:
+[
+    {
+        "speciality": "kinesiología"
+    },
+    {
+        "speciality": "clínica médica"
+    },
+    {
+        "speciality": "neurología"
+    },
+    {
+        "speciality": "otorrinolaringología"
+    },
+    {
+        "speciality": "pediatría"
+    },
+    {
+        "speciality": "psiquiatría"
+    },
+    {
+        "speciality": "endocrinología"
+    },
+    {
+        "speciality": "cardiología"
+    },
+    {
+        "speciality": "traumatología"
+    },
+    {
+        "speciality": "ginecología"
+    },
+    {
+        "speciality": "obstetricia"
+    },
+    {
+        "speciality": "oftalmología"
+    },
+    {
+        "speciality": "gastroenterología"
+    },
+    {
+        "speciality": "neumonología"
+    },
+    {
+        "speciality": "dermatología"
+    },
 ]

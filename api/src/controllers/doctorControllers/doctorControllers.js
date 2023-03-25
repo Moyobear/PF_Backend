@@ -150,14 +150,13 @@ const updateDoctor = async (id, phone, address, image) => {
       attributes: ["speciality"],
       through: { attributes: [] },
     },
-    include: {
-      model: Schedule,
-      through: { attributes: [] },
-    },
-    include: {
-      model: User,
-      // through: { attributes: [] },
-    },
+    // include: {
+    //   model: Schedule,
+    //   through: { attributes: [] },
+    // },
+    // include: {
+    //   model: User,
+    // },
   });
   request.set({
     phone: phone,
