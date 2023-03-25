@@ -11,7 +11,7 @@ const validatorCreateDoctor = (req, res, next) => {
     phone,
     address,
     image,
-    speciality,
+    specialities,
   } = req.body;
   if (
     ![
@@ -24,7 +24,7 @@ const validatorCreateDoctor = (req, res, next) => {
       phone,
       address,
       image,
-      speciality,
+      specialities,
     ].every(Boolean)
   )
     return res.status(404).json({ error: "Falta enviar datos obligatorios" });

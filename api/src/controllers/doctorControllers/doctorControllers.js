@@ -1,81 +1,58 @@
 const { Doctor, Speciality, Schedule, User } = require("../../db");
 const { Op } = require("sequelize");
 
-// *Helper para estructurar la info que recibimos de la base de datos y enviarla al front:
-let filterDB = (item) => {
-  return {
-    id: item.id,
-    dni: item.dni,
-    code: item.code,
-    full_name: item.full_name,
-    speciality: item.Speciality.map((element) => element.speciality).flat(),
-    gender: item.gender,
-    age: item.age,
-    birthday: item.birthday,
-    phone: item.phone,
-    address: item.address,
-    image: item.image,
-    is_delete: item.is_delete,
-    schedule: item.Schedule,
-    user: item.User,
-  };
-};
-
 // *Este helper nos permite traer los Medicos de la base de datos, filtrar a través de la propiedad is_delete,  implementarlo en las rutas que lo requieran:
 const getDoctors = async () => {
   const request = await Doctor.findAll({
-    include: {
-      model: Speciality,
-      attributes: ["speciality"],
-      through: { attributes: [] },
-    },
-    include: {
-      model: Schedule,
-      through: { attributes: [] },
-    },
-    include: {
-      model: User,
-      // through: { attributes: [] },
-    },
+    include: [
+      {
+        model: Speciality,
+        through: { attributes: [] },
+      },
+      {
+        model: Schedule,
+        through: { attributes: [] },
+      },
+      {
+        model: User,
+      },
+    ],
   });
-  let filtered = request
-    .map((item) => filterDB(item))
-    .filter((item) => item.is_delete !== true)
-    .flat();
-  return filtered;
+
+  return request;
 };
 
 // *Este controller busca a un paciente por nombre:
 const getAllNames = async () => {
   const request = await Doctor.findAll();
   const names = request
-    .map((item) => item.full_name)
     .filter((item) => item.is_delete !== true)
+    .map((item) => item.full_name)
     .flat();
   return names;
 };
 
 // *Este controller busca a un médico por nombre:
 const searchDoctorByName = async (full_name) => {
-  const request = await Medico.findOne({
-    where: { name: { [Op.iLike]: `%${full_name}%` } },
-    include: {
-      model: Speciality,
-      attributes: ["speciality"],
-      through: { attributes: [] },
-    },
-    include: {
-      model: Schedule,
-      through: { attributes: [] },
-    },
-    include: {
-      model: User,
-      // through: { attributes: [] },
-    },
+  const request = await Doctor.findOne({
+    where: { full_name: { [Op.iLike]: `%${full_name}%` } },
+    include: [
+      {
+        model: Speciality,
+        through: { attributes: [] },
+      },
+      {
+        model: Schedule,
+        through: { attributes: [] },
+      },
+      {
+        model: User,
+        through: { attributes: [] },
+      },
+    ],
   });
   if (request && request.is_delete === false) {
-    let filtered = filterDB(request);
-    return [filtered];
+    return [request];
   } else {
     return "No existe Médico con ese nombre";
   }
@@ -83,12 +60,27 @@ const searchDoctorByName = async (full_name) => {
 
 // *Este controller busca a un médico por DNI:
 const findDni = async (dni) => {
-  const request = await getDoctors();
-  let search = request.filter((item) => item.dni === dni);
-  if (!search) {
-    return "No existe Médico con ese DNI";
+  const request = await Doctor.findOne({
+    where: { dni: dni },
+    include: [
+      {
+        model: Speciality,
+        through: { attributes: [] },
+      },
+      {
+        model: Schedule,
+        through: { attributes: [] },
+      },
+      {
+        model: User,
+      },
+    ],
+  });
+
+  if (request) {
+    return request;
   } else {
-    return search;
+    return "No existe Médico con ese DNI";
   }
 };
 
@@ -100,9 +92,23 @@ const getAllDoctors = async () => {
 
 // *Este controller busca a un médico por id:
 const getDoctorById = async (id) => {
-  const request = await getDoctors();
-  const doctor = request.filter((item) => item.id === id);
-  return doctor[0];
+  const request = await Doctor.findByPk(id, {
+    include: [
+      {
+        model: Speciality,
+        through: { attributes: [] },
+      },
+      {
+        model: Schedule,
+        through: { attributes: [] },
+      },
+      {
+        model: User,
+      },
+    ],
+  });
+
+  return request;
 };
 
 // *Este controller permite crear un médico:
@@ -116,7 +122,7 @@ const createDoctor = async (
   phone,
   address,
   image,
-  speciality
+  specialities
 ) => {
   let newDoctor = await Doctor.create({
     code,
@@ -130,12 +136,19 @@ const createDoctor = async (
     image,
   });
 
-  let specialities = await Speciality.findAll({
-    where: { speciality: speciality },
+  let specialitys = await Speciality.findAll({
+    where: { speciality: specialities },
   });
-  await newDoctor.addSpeciality(specialities);
+  await newDoctor.addSpeciality(specialitys);
 
-  const doctor_created = await findDni(dni);
+  const doctor_created = await Doctor.findOne({
+    where: { full_name: { [Op.iLike]: `%${full_name}%` } },
+    include: {
+      model: Speciality,
+      attributes: ["speciality"],
+      through: { attributes: [] },
+    },
+  });
   return {
     message: "El registro del médico se ha creado exitosamente",
     doctor_created,
@@ -144,21 +157,8 @@ const createDoctor = async (
 
 // *Este controller permite actualizar un médico buscándolo por id:
 const updateDoctor = async (id, phone, address, image) => {
-  const request = await Doctor.findByPk(id, {
-    include: {
-      model: Speciality,
-      attributes: ["speciality"],
-      through: { attributes: [] },
-    },
-    // include: {
-    //   model: Schedule,
-    //   through: { attributes: [] },
-    // },
-    // include: {
-    //   model: User,
-    // },
-  });
-  request.set({
+  const request = await Doctor.findByPk(id);
+  await request.set({
     phone: phone,
     address: address,
     image: image,
@@ -166,8 +166,7 @@ const updateDoctor = async (id, phone, address, image) => {
 
   await request.save();
 
-  let filtered = filterDB(request);
-  return filtered;
+  return request;
 };
 
 // *Este controller elimina un médico por id:

@@ -63,7 +63,7 @@ const createDoctorHandler = async (req, res) => {
       phone,
       address,
       image,
-      speciality,
+      specialities,
     } = req.body;
     const request = await createDoctor(
       code,
@@ -75,7 +75,7 @@ const createDoctorHandler = async (req, res) => {
       phone,
       address,
       image,
-      speciality
+      specialities
     );
     return res.status(201).json(request);
   } catch (error) {
@@ -85,8 +85,8 @@ const createDoctorHandler = async (req, res) => {
 
 const updateDoctorHandler = async (req, res) => {
   try {
-    const { id, email, telefono, direccion, foto } = req.body;
-    const request = await updateDoctor(id, email, telefono, direccion, foto);
+    const { id, phone, address, image } = req.body;
+    const request = await updateDoctor(id, phone, address, image);
     return res.status(201).json(request);
   } catch (error) {
     return res.status(400).json({ error: error.message });

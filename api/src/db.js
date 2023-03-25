@@ -90,10 +90,6 @@ TicketMedical.belongsTo(Patient);
 Patient.hasMany(TicketAnalysis);
 TicketAnalysis.belongsTo(Patient);
 
-// ?Doctor vs Speciality = N : N
-Doctor.hasMany(Speciality);
-Speciality.belongsTo(Doctor);
-
 // ?Plan vs Patient = 1 : N
 Plan.hasMany(Patient);
 Patient.belongsTo(Plan);
