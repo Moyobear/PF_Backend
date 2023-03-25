@@ -12,7 +12,8 @@ const GET_SPECIALITY = async (req, res) => {
 
 const POST_SPECIALITY = async (req, res) => {
     try {
-    const {params} = req.body
+        const params = req.body
+    console.log(req.body);
     const data = await createSpeciality(params)
     res.status(200).json(data)
         
@@ -23,8 +24,11 @@ const POST_SPECIALITY = async (req, res) => {
 
 const PUT_SPECIALITY = async (req, res) =>{
     try {
-        const {id, newSpeciality} = req.body
-        const data = await changeSpeciality(id, newSpeciality)
+        const {id, speciality} = req.body
+        
+
+        //console.log(req.body,'handler')
+        const data = await changeSpeciality(id, speciality)
         res.status(200).json(data)
         
     } catch (error) {
@@ -34,7 +38,7 @@ const PUT_SPECIALITY = async (req, res) =>{
 
 const DELETE_SPECIALITY = async (req, res) =>{
     try {
-        const {params} = req.body 
+        const params = req.body 
         const data = await deleteSpeciality(params)
         res.status(200).json(data)
     } catch (error) {
