@@ -113,7 +113,7 @@ Json Doctores:
         "code": 687498,
         "full_name": "Maxima Poronga",
         "gender": "femenino",
-        "birthday": "1980-17-09",
+        "birthday": "1980-12-09",
         "age": 43,
         "phone": 46859731,
         "address": "Tierra de Fuego, Argentina",

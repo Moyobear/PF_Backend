@@ -11,10 +11,10 @@ const {
 // *Handler para buscar un paciente por nombre o para traerlos todos:
 const getPatientsHandler = async (req, res) => {
   try {
-    const { full_name } = req.query;
-    console.log(full_name);
-    const request = full_name
-      ? await searchPatientByName(full_name)
+    const { name } = req.query;
+    console.log(name);
+    const request = name
+      ? await searchPatientByName(name)
       : await getAllPatients();
     return res.status(200).json(request);
   } catch (error) {

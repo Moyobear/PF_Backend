@@ -49,7 +49,6 @@ const searchDoctorByName = async (full_name) => {
       },
       {
         model: User,
-        through: { attributes: [] },
       },
     ],
   });

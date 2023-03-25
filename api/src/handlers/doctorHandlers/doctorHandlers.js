@@ -30,9 +30,9 @@ const getDniHandler = async (req, res) => {
 
 const getDoctorsHandler = async (req, res) => {
   try {
-    const { full_name } = req.query;
-    const request = full_name
-      ? await searchDoctorByName(full_name)
+    const { name } = req.query;
+    const request = name
+      ? await searchDoctorByName(name)
       : await getAllDoctors();
     return res.status(200).json(request);
   } catch (error) {

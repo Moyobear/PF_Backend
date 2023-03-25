@@ -16,8 +16,6 @@ const {
 // *Acá definimos las rutas de pacientes:
 const patientRouter = Router();
 
-// TODO: rutas para setear los turnos de los ticketMedical y establecerlos en la tabla patient.
-
 patientRouter.get("/", getPatientsHandler);
 
 patientRouter.get("/dni", getDniPatientHandler);

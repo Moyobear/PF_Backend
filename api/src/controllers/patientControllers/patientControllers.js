@@ -21,9 +21,9 @@ const getPatients = async () => {
 };
 
 // *Este controller busca a un paciente por nombre:
-const searchPatientByName = async (full_name) => {
+const searchPatientByName = async (name) => {
   const request = await Patient.findOne({
-    where: { full_name: { [Op.iLike]: `%${full_name}%` } },
+    where: { full_name: { [Op.iLike]: `%${name}%` } },
     include: [
       {
         model: TicketMedical,
