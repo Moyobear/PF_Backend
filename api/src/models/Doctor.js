@@ -9,7 +9,7 @@ module.exports = (sequelize) => {
         allowNull: false,
         primaryKey: true,
         unique: true,
-        autoincrement: true,
+        autoIncrement: true,
       },
       dni: {
         type: DataTypes.INTEGER,
