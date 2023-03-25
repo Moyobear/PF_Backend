@@ -8,11 +8,9 @@ const getPlanAll = async () => {
 }
 
 const getPlanByCode = async (code) => {
-    const planSearch = await Plan.findAll({
+    const planSearch = await Plan.findOne({
         where: {
-            code: {
-                [Op.iLike]: `%${code}`
-            }
+            code: code
         }
     })
 
@@ -22,12 +20,14 @@ const getPlanByCode = async (code) => {
 }
 
 const getPlanById = async (id) => {
-    const plan = await Plan.findByPK(id);
+    const plan = await Plan.findByPk(id);
     if(!plan) return `No se encontro ningun plan con el id = ${id} `
+    return plan;
 }
 
 const updatePlan = async (id, name, members, price, description, code, consultations_per_patients) => {
-    const plan = await Plan.findByPK(id)
+    
+    const plan = await Plan.findByPk(id)
     if(!plan) return `No se puede actualizar el plan con el id = ${id}, porque no existe `
 
     plan.set({
@@ -35,7 +35,6 @@ const updatePlan = async (id, name, members, price, description, code, consultat
         members,
         price,
         description,
-        code,
         consultations_per_patients
     })
 
