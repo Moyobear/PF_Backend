@@ -3,6 +3,7 @@ const {
   confirmTicket,
   allTicketMedicals,
   getTicketId,
+  deleteTicket,
 } = require("../../controllers/ticketMedicalControllers/ticketMedicalControllers.js");
 
 const ticketMedicalHandler = async (req, res) => {
@@ -60,9 +61,20 @@ const ticketIdHandler = async (req, res) => {
   }
 };
 
+const deleteTicketHandler = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const request = await deleteTicket(id);
+    return res.status(200).json(request);
+  } catch (error) {
+    return res.status(400).json({ error: error.message });
+  }
+};
+
 module.exports = {
   ticketMedicalHandler,
   confirmTicketHandler,
   allTicketHandler,
   ticketIdHandler,
+  deleteTicketHandler,
 };

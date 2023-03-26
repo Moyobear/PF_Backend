@@ -57,11 +57,18 @@ const getTicketId = async (id) => {
   return request;
 };
 
+// *Este controller permite borrar un ticketsMedicals por id.
+const deleteTicket = async (id) => {
+  const request = await TicketMedical.findByPk(id, { include: { all: true } });
+  request.destroy();
+
+  return "El Turno médico fue borrado exitosamente";
+};
+
 module.exports = {
   createTicket,
   confirmTicket,
   allTicketMedicals,
   getTicketId,
-  
+  deleteTicket,
 };
-
