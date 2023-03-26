@@ -7,6 +7,7 @@ const {
 } = require("../../controllers/ticketMedicalControllers/ticketMedicalControllers.js");
 
 const ticketMedicalHandler = async (req, res) => {
+  console.log(req.body);
   try {
     const {
       title,
