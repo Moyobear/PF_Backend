@@ -14,7 +14,7 @@ const paidsRouter = Router();
 
 paidsRouter.get("/", getPaidsHandler)
 paidsRouter.get("/:id", getPaidByIdHandler)
-paidsRouter.get("/:userId/", getPaidsByUserHandler)
+paidsRouter.get("/:userId/user", getPaidsByUserHandler)
 paidsRouter.put("/", updateByIdHandler)
 paidsRouter.post("/", createPaidHandler)
 
