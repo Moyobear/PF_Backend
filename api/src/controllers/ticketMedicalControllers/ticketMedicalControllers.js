@@ -45,9 +45,23 @@ const confirmTicket = async (ticketId) => {
   return "El turno ha sido confirmado exitosamente";
 };
 
+// *Este controller permite devolver todos los ticketsMedicals.
+const allTicketMedicals = async () => {
+  const request = await TicketMedical.findAll({ include: { all: true } });
+  return request;
+};
+
+// *Este controller permite buscar un ticketsMedicals por id.
+const getTicketId = async (id) => {
+  const request = await TicketMedical.findByPk(id, { include: { all: true } });
+  return request;
+};
+
 module.exports = {
   createTicket,
   confirmTicket,
+  allTicketMedicals,
+  getTicketId,
+  
 };
 
-// TODO: auth0, firebase, supabase

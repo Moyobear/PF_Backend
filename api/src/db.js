@@ -74,7 +74,7 @@ const {
 // *Aca vendrian las relaciones:
 // *Relaciones 1 a 1:
 // ?Schedule vs TicketMedical = 1 : 1
-TicketMedical.hasOne(Schedule);
+TicketMedical.hasOne(Schedule, { onDelete: "cascade" });
 Schedule.belongsTo(TicketMedical);
 
 // ?TicketAnalysis vs Payment = 1 : 1
