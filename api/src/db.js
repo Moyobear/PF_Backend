@@ -78,8 +78,8 @@ const {
 // *Aca vendrian las relaciones:
 // *Relaciones 1 a 1:
 // ?Schedule vs TicketMedical = 1 : 1
-TicketMedical.hasOne(Schedule);
-Schedule.belongsTo(TicketMedical);
+TicketMedical.hasOne(Schedule, { onDelete: "cascade" });
+Schedule.belongsTo(TicketMedical, { onDelete: "cascade" });
 
 // ?TicketAnalysis vs Payment = 1 : 1
 TicketAnalysis.hasOne(Payment);
@@ -129,8 +129,16 @@ Doctor.belongsToMany(Speciality, { through: "DoctorSpeciality" });
 Speciality.belongsToMany(Doctor, { through: "DoctorSpeciality" });
 
 // ?Doctor vs Schedule = N : N
-Doctor.belongsToMany(Schedule, { through: "DoctorSchedule" });
-Schedule.belongsToMany(Doctor, { through: "DoctorSchedule" });
+Doctor.belongsToMany(
+  Schedule,
+  { through: "DoctorSchedule" },
+  { onDelete: "cascade" }
+);
+Schedule.belongsToMany(
+  Doctor,
+  { through: "DoctorSchedule" },
+  { onDelete: "cascade" }
+);
 
 // ?Doctor vs TicketMedical = N : N
 Doctor.belongsToMany(TicketMedical, { through: "DoctorTM" });

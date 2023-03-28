@@ -1,5 +1,11 @@
 const { Router } = require("express");
-const {ticketMedicalHandler, confirmTicketHandler} = require("../handlers/ticketMedicalHandlers/ticketMedicalHandlers.js");
+const {
+  ticketMedicalHandler,
+  confirmTicketHandler,
+  allTicketHandler,
+  ticketIdHandler,
+  deleteTicketHandler,
+} = require("../handlers/ticketMedicalHandlers/ticketMedicalHandlers.js");
 const {
   validatorCreateTicketMedical,
 } = require("../middlewares/validators.js");
@@ -7,12 +13,18 @@ const {
 // *Acá definimos las rutas de turnos médicos:
 const ticketMedicalRouter = Router();
 
+ticketMedicalRouter.get("/", allTicketHandler);
+
+ticketMedicalRouter.get("/:id", ticketIdHandler);
+
 ticketMedicalRouter.post(
   "/createTicketMedical",
   validatorCreateTicketMedical,
   ticketMedicalHandler
 );
 
-ticketMedicalRouter.put("/confirmTicket", confirmTicketHandler)
+ticketMedicalRouter.put("/confirmTicket", confirmTicketHandler);
+
+ticketMedicalRouter.delete("/:id/delete", deleteTicketHandler);
 
 module.exports = ticketMedicalRouter;
