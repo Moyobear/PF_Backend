@@ -13,18 +13,15 @@ const {
 // *Acá definimos las rutas de turnos médicos:
 const ticketAnalisysRouter = Router();
 
-ticketAnalisysRouter.get("/", allTicketAnalisysHandler);
+//ticketAnalisysRouter.get("/", allTicketAnalisysHandler);
 
-ticketAnalisysRouter.get("/:id", ticketAnalisysIdHandler);
+//ticketAnalisysRouter.get("/:id", ticketAnalisysIdHandler);
 
-ticketAnalisysRouter.post(
-  "/createTicketAnalisys",
-  validatorCreateTicketAnalisys,
-  ticketAnalisysHandler
+ticketAnalisysRouter.post("/createTicketAnalisys", /*validatorCreateTicketAnalisys*/ ticketAnalisysHandler
 );
 
 ticketAnalisysRouter.put("/confirmTicket", confirmTicketAnalisysHandler);
 
-ticketAnalisysRouter.delete("/:id/delete", deleteTicketAnalisysHandler);
+//ticketAnalisysRouter.delete("/:id/delete", deleteTicketAnalisysHandler);
 
 module.exports = ticketAnalisysRouter;

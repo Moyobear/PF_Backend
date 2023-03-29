@@ -41,5 +41,5 @@ const {
   
   module.exports = {
     ticketAnalisysHandler,
-    confirmTicketAnalisisHandler,
+    confirmTicketAnalisysHandler,
   };
