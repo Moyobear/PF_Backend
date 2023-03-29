@@ -1,5 +1,9 @@
 const { Analisys } = require("../../db")
 
+
+
+
+
 //getAnalysis devuelve todos los campos que tenga la tabla Analysis
 const getAnalysis = async () => {
     const request = await Analysis.findAll({
@@ -34,6 +38,8 @@ const changeAnalysis = async (id, name) => {
     }
   };
 
+
+
   // deleteAnalysis permite eliminar especialidades en la tabla Analisis
 const deleteAnalysis = async (params) => {
     const deleteAnaly = await Analisys.destroy({
@@ -45,7 +51,7 @@ const deleteAnalysis = async (params) => {
         return {
             message: `Se ha eliminado el analisis ${params.name} exitosamente`
         };
-    } else { throw new Error (`No se ha encontrado la especialidad ${params.speciality}`)
+    } else { throw new Error (`No se ha encontrado el analisis ${params.name}`)
     }
 }
 
