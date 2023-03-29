@@ -191,7 +191,7 @@ const deleteSchedule = async (id) => {
       through: { attributes: [] },
     },
   });
-  request.schedules.forEach((item) => item.destroy());
+  request.schedules.forEach((item) => (item.is_delete = true));
 
   return "Se han borrado los horarios exitosamente";
 };

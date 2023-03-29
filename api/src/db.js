@@ -72,7 +72,7 @@ const {
   TicketMedical,
   TicketAnalysis,
   User,
-  Analysis
+  Analysis,
 } = sequelize.models;
 
 // *Aca vendrian las relaciones:
@@ -85,6 +85,10 @@ Schedule.belongsTo(TicketMedical, { onDelete: "cascade" });
 TicketAnalysis.hasOne(Payment);
 Payment.belongsTo(TicketAnalysis);
 
+// ?Payment vs Plan = 1 : 1
+Payment.hasOne(Plan);
+Plan.belongsTo(Payment);
+
 // *Relaciones 1 a N:
 // ?Patient vs TicketMedical = 1 : N
 Analysis.hasMany(TicketAnalysis);
@@ -94,6 +98,14 @@ TicketAnalysis.belongsTo(Analysis);
 // ?Patient vs TicketMedical = 1 : N
 Patient.hasMany(TicketMedical);
 TicketMedical.belongsTo(Patient);
+
+// ?Payment vs Paids = 1 : N
+Payment.hasMany(Paids);
+Paids.belongsTo(Payment);
+
+// ?User vs Payment = 1 : N
+User.hasMany(Payment);
+Payment.belongsTo(User);
 
 // ?Patient vs TicketAnalysis = 1 : N
 Patient.hasMany(TicketAnalysis);
