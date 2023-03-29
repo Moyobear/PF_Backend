@@ -1,22 +1,22 @@
-const { Analisys } = require("../../db")
-
+const { Analysis } = require("../../db")
+const { Op } = require("sequelize");
 
 
 
 
 //getAnalysis devuelve todos los campos que tenga la tabla Analysis
 const getAnalysis = async () => {
-    const request = await Analysis.findAll({
-        order: [['speciality', 'ASC']]
-    })
+    const request = await Analysis.findAll()
     return request
 }
 
 //createAnalysis crea un nuevo analysis
 const createAnalysis = async (params) => {
+    console.log(params);
     if (params) {
-        const nuevaAnalisys= await Analisys.create({
-        name: params.name
+        const nuevaAnalisys= await Analysis.create({
+        name: params.name,
+        speciality: params.speciality
     });
     return {
         message: "El registro del Analisis se ha creado exitosamente"
@@ -27,13 +27,22 @@ const createAnalysis = async (params) => {
 }
 
 // changeSpeciality modifica el valor de la tabla analysis
-const changeAnalysis = async (id, name) => {
-    const request = await Analisys.findByPk(id);
+const changeAnalysis = async (params) => {
+    const request = await Analysis.findByPk(params.id);
+
     if (request) {
-      request.name = name;
+
+        if(params.name){
+            request.name = params.name;
+        }
+
+        if(params.speciality){
+            request.speciality = params.speciality;
+        }
+
       await request.save();
       return {message: "modificado con exito"}
-    } else {
+    }else {
       throw new Error("Analisis no encontrado");
     }
   };
@@ -42,16 +51,16 @@ const changeAnalysis = async (id, name) => {
 
   // deleteAnalysis permite eliminar especialidades en la tabla Analisis
 const deleteAnalysis = async (params) => {
-    const deleteAnaly = await Analisys.destroy({
+    const deleteAnaly = await Analysis.destroy({
         where: {
-            name: params.name
+            id: params.id
         }
     });
     if (deleteAnaly === 1) {
         return {
-            message: `Se ha eliminado el analisis ${params.name} exitosamente`
+            message: `Se ha eliminado el analisis exitosamente`
         };
-    } else { throw new Error (`No se ha encontrado el analisis ${params.name}`)
+    } else { throw new Error (`No se ha encontrado el analisis`)
     }
 }
 

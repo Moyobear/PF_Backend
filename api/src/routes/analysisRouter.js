@@ -3,24 +3,24 @@ const {
     GET_ANALYSIS,
     POST_ANALYSIS,
     PUT_ANALYSIS,
-    DELETE_ANALYSIS} = require('../handlers/analysisHandler/analysisHandler.js')
+    DELETE_ANALYSIS} = require('../handlers/analysisHandlers/analysisHandlers');
 
 
 
 // *Acá definimos las rutas de especialidades:
 
-const AnalysisRouter = Router();
+const analysisRouter = Router();
 
-specialityRouter.get("/", GET_ANALYSIS)
-
-
-specialityRouter.post("/", POST_ANALYSIS)
+analysisRouter.get("/", GET_ANALYSIS)
 
 
-specialityRouter.put("/", PUT_ANALYSIS)
+analysisRouter.post("/", POST_ANALYSIS)
 
 
-specialityRouter.delete("/", DELETE_ANALYSIS)
+analysisRouter.put("/", PUT_ANALYSIS)
 
 
-module.exports = AnalysisRouter;
+analysisRouter.delete("/", DELETE_ANALYSIS)
+
+
+module.exports = analysisRouter;

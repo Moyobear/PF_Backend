@@ -23,8 +23,8 @@ const POST_ANALYSIS = async (req, res) =>{
 
 const PUT_ANALYSIS = async (req, res) =>{
     try {
-        const {id, speciality} = req.body
-        const data = await changeAnalysis(id, name)
+        const params = req.body
+        const data = await changeAnalysis(params)
         res.status(200).json(data)
     } catch (error) {
         res.status(400).json({ error: error.message })

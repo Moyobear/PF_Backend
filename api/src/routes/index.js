@@ -9,7 +9,7 @@ const planRouter = require("./planRouter.js")
 const specialityRouter = require("./specialityRouter.js")
 const ticketAnalysisRouter = require("./ticketAnalysisRouter.js")
 const userRouter = require("./userRouter.js")
-const AnalysisRouter = require("./analysisRouter.js")
+const analysisRouter = require("./analysisRouter.js")
 
 const router = Router();
 
@@ -23,6 +23,6 @@ router.use("/plan", planRouter)
 router.use("/speciality", specialityRouter)
 router.use("/ticketAnalysis", ticketAnalysisRouter)
 router.use("/user", userRouter)
-router.use("/analysis", AnalysisRouter)
+router.use("/analysis", analysisRouter)
 
 module.exports = router;
