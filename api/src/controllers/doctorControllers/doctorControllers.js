@@ -109,7 +109,7 @@ const getDoctorById = async (id) => {
     ],
   });
   if (request && request.is_delete === false) {
-    return [request];
+    return request;
   } else {
     return "No existe Médico con ese Id";
   }
