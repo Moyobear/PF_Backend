@@ -81,10 +81,6 @@ const {
 TicketMedical.hasOne(Schedule, { onDelete: "cascade" });
 Schedule.belongsTo(TicketMedical, { onDelete: "cascade" });
 
-// ?TicketAnalysis vs Payment = 1 : 1
-TicketAnalysis.hasOne(Payment);
-Payment.belongsTo(TicketAnalysis);
-
 // ?Payment vs Plan = 1 : 1
 Payment.hasOne(Plan);
 Plan.belongsTo(Payment);
@@ -98,6 +94,10 @@ TicketAnalysis.belongsTo(Analysis);
 // ?Patient vs TicketMedical = 1 : N
 Patient.hasMany(TicketMedical);
 TicketMedical.belongsTo(Patient);
+
+// ?TicketAnalysis vs Payment = 1 : N
+Payment.hasMany(TicketAnalysis);
+TicketAnalysis.belongsTo(Payment);
 
 // ?Payment vs Paids = 1 : N
 Payment.hasMany(Paids);
