@@ -1,4 +1,4 @@
-const {User,Plan} = require("../../db.js")
+const {User,Plan,Paids} = require("../../db.js")
 const {Op}= require("sequelize")
 
 /* 
@@ -48,10 +48,15 @@ const filterUserDB = (item) => {
 
 const getAllUser = async () =>{
     const request = await User.findAll({
-        include: {
-            model: Plan,
-            attributes: ["name"],
-          },
+        include:[ 
+            {
+            model: Plan
+            },
+            {
+            model: Paids,
+            }
+        ],
+
     })
     let filtered = request
     .map((item) => filterUserDB(item))
@@ -61,6 +66,26 @@ const getAllUser = async () =>{
 
   return filtered;   
 }
+
+// *Este controller busca a un usuario por id:
+const getUserById = async (id) => {
+    const request = await User.findByPk(id, {
+      include: [
+        {
+          model: Plan,
+        },
+        {
+          model: Paids,
+        },
+      ],
+    });
+  
+    if (request && request.is_delete === false) {
+      return request;
+    } else {
+      return "No existe el Usuario con ese Id";
+    }
+  };
 
 // aca se crea un usuario nuevo 
 
@@ -153,6 +178,7 @@ const deleteUser = async (id) => {
 
 module.exports = {
     getAllUser,
+    getUserById,
     createUser,
     isAdmin,
     deleteUser,
