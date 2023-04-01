@@ -20,7 +20,7 @@ analysisRouter.post("/", POST_ANALYSIS)
 analysisRouter.put("/", PUT_ANALYSIS)
 
 
-analysisRouter.delete("/", DELETE_ANALYSIS)
+analysisRouter.delete("/:id", DELETE_ANALYSIS)
 
 
 module.exports = analysisRouter;

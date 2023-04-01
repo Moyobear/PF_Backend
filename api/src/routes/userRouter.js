@@ -16,9 +16,9 @@ userRouter.get('/:id', GET_USER_ID)
 
 userRouter.post('/', POST_USER)
 
-userRouter.put('/:id/isAdmin', PUT_ISADMIN)
+userRouter.put('/isAdmin', PUT_ISADMIN)
 
-userRouter.delete('/', DELETE_USER)
+userRouter.delete('/:id', DELETE_USER)
 
 // !POR DEFINIR...
 
