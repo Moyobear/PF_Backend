@@ -41,9 +41,14 @@ const validatorUpdateDoctor = (req, res, next) => {
 
 // *Validador para crear a un paciente:
 const validatorCreatePatient = (req, res, next) => {
-  const { full_name, dni, gender, age, birthday, phone, address } = req.body;
+  const { idUser, full_name, dni, gender, age, birthday, phone, address } =
+    req.body;
 
-  if (![full_name, dni, gender, age, birthday, phone, address].every(Boolean))
+  if (
+    ![idUser, full_name, dni, gender, age, birthday, phone, address].every(
+      Boolean
+    )
+  )
     return res.status(404).json({ error: "Falta enviar datos obligatorios" });
 
   next();

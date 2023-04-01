@@ -25,24 +25,20 @@ hace falta un put para modificar el usuario ? que parametros ???????
     is_delete
 */
 
-
-
-
- // aca esta estructurada la informacion de la base de datos 
+// aca esta estructurada la informacion de la base de datos
 const filterUserDB = (item) => {
-    return {
-      id: item.id,
-      full_name: item.full_name,
-      email: item.email,
-      //password: item.password, hace falta devolver la contraseña?
-      user_name: item.user_name,
-      image: item.image,
-      is_admin: item.is_admin,
-      is_plan_pay: item.is_plan_pay,
-      is_delete: item.is_delete,
-    };
+  return {
+    id: item.id,
+    full_name: item.full_name,
+    email: item.email,
+    //password: item.password, hace falta devolver la contraseña?
+    user_name: item.user_name,
+    image: item.image,
+    is_admin: item.is_admin,
+    is_plan_pay: item.is_plan_pay,
+    is_delete: item.is_delete,
   };
-
+};
 
 // este controler trae los users
 
@@ -63,9 +59,8 @@ const getAllUser = async () =>{
     .filter((item) => item.is_delete !== true)
     .flat();
 
-
-  return filtered;   
-}
+  return filtered;
+};
 
 // *Este controller busca a un usuario por id:
 const getUserById = async (id) => {
@@ -89,92 +84,76 @@ const getUserById = async (id) => {
 
 // aca se crea un usuario nuevo 
 
-const createUser = async (
-    full_name,
-    email,
-    password,
-    user_name,
-    image,
-)  => {
+const createUser = async (full_name, email, password, user_name, image) => {
+  if (full_name && email && password && user_name && image) {
+    const request = await User.create({
+      full_name: full_name,
+      email: email,
+      password: password,
+      user_name: user_name,
+      image: image,
+      is_plan_pay: false,
+    });
+    return { message: "El Usuario a sido creado con exito" };
+  } else {
+    throw new Error("Faltan datos para crear el registro de usuario");
+  }
+};
 
+const isAdmin = async (id, is_Admin) => {
+  // esto hace que la app nunca se quede sin admin, siempre tiene que existir uno almenos
+  let allUser = await getAllUser();
 
+  const countAdmins = allUser.reduce(
+    (count, item) => count + (item.is_admin === true ? 1 : 0),
+    0
+  );
 
-    if ( full_name &&
-        email &&
-        password &&
-        user_name &&
-        image) {
-       const request = await User.create({
-    full_name: full_name,
-    email: email,
-    password: password,
-    user_name: user_name,
-    image: image,
-    is_plan_pay:false
-    }) 
-    return { message : 'El Usuario a sido creado con exito'}
-
-    }else {
-        throw new Error("Faltan datos para crear el registro de usuario")
-    }}
-
-const isAdmin = async (id, is_Admin ) =>{
-    
-    // esto hace que la app nunca se quede sin admin, siempre tiene que existir uno almenos 
-    let allUser = await getAllUser()
-
-    const countAdmins = allUser.reduce(
-        (count, item) => count + (item.is_admin === true ? 1 : 0),
-        0
-    )
-
-    if (countAdmins > 1 && is_Admin == 'false') {
-        const result = await User.update(
-        {
-            is_admin: false
+  if (countAdmins > 1 && is_Admin == "false") {
+    const result = await User.update(
+      {
+        is_admin: false,
+      },
+      {
+        where: {
+          id: id,
         },
-        {
-            where: {
-                id: id
-            }
-        }
+      }
     );
-        return {message: 'El usuario ya no es Administador'}
-
-    }else if(is_Admin == 'true') {
-        const result = await User.update(
-            {
-                is_admin: true
-            },
-            {
-                where: {
-                    id: id
-                }
-            })
-        return {message: 'El usuario ahora es administrador'}
-    }else{
-        throw new Error ('No se puede dejar a la aplicación sin al menos un administrador')
-    }
-}
+    return { message: "El usuario ya no es Administador" };
+  } else if (is_Admin == "true") {
+    const result = await User.update(
+      {
+        is_admin: true,
+      },
+      {
+        where: {
+          id: id,
+        },
+      }
+    );
+    return { message: "El usuario ahora es administrador" };
+  } else {
+    throw new Error(
+      "No se puede dejar a la aplicación sin al menos un administrador"
+    );
+  }
+};
 
 const deleteUser = async (id) => {
-    const request = await User.findByPk(id);
-    
-    if (!request) {
-      throw new Error('El usuario no fue encontrado');
-    }
-    
-    request.set({
-      is_delete: true,
-    });
-    await request.save();
-  
-    return "El usuario fue borrado exitosamente";
-  };
+  const request = await User.findByPk(id);
 
+  if (!request) {
+    throw new Error("El usuario no fue encontrado");
+  }
 
+  request.set({
+    is_delete: true,
+  });
+  await request.save();
 
-
+  return "El usuario fue borrado exitosamente";
+};
 
 module.exports = {
     getAllUser,
