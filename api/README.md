@@ -311,7 +311,7 @@ Devuelve un objeto con la siguiente información:
 
 ## Endpoints de la ruta _/patient_:
 
-- `get => /patient || /patient?=` => Devuelve un array con todos los pacientes de la clínica. Cada elemento del array (objeto), incluye la información asociada sobre, su usuario, Turnos Médicos, Turnos a Análisis, Usuario y Plan. Este endpoint también puede recibir un nombre para devolver el resultado de la búsqueda de un paciente por nombre en un array.
+- `get => /patient || /patient?name=` => Devuelve un array con todos los pacientes de la clínica. Cada elemento del array (objeto), incluye la información asociada sobre, su usuario, Turnos Médicos, Turnos a Análisis, Usuario y Plan. Este endpoint también puede recibir un nombre para devolver el resultado de la búsqueda de un paciente por nombre en un array.
 
 ```shell
 [
@@ -739,4 +739,603 @@ Devuelve:
 }
 ```
 
+<!-- TODO -->
 <!-- - `delete => /speciality` => A este endpoint se envía por params un `id` para buscar al paciente a borrar; setea su atributo `is_delete` como true, impidiendo que pueda mostrarse de nuevo (borrado lógico) POR MODIFICAR. -->
+
+## Endpoints de la ruta _/user_:
+
+- `get => /user` => Este endpoint devuelve un array con todos los usuarios de la clínica.
+
+```shell
+[
+	{
+		"id": 1,
+		"full_name": "Maluma Diva",
+		"email": "divinayarrecha@gmail.com",
+		"user_name": "Bendecida y Afortunada",
+		"image": "https://www.softzone.es/app/uploads/2018/04/guest.png",
+		"is_admin": null,
+		"is_plan_pay": true,
+		"is_delete": false
+	},
+	{
+		"id": 2,
+		"full_name": "Lionel Messi",
+		"email": "elguevodelmundo@gmail.com",
+		"user_name": "Dios y yo",
+		"image": "https://www.softzone.es/app/uploads/2018/04/guest.png",
+		"is_admin": null,
+		"is_plan_pay": true,
+		"is_delete": false
+	}
+]
+```
+
+- `get => /user/:id` => Este endpoint devuelve un objeto con el usuario que coincida con ese id con toda su info relacionada. Recibe por params el id a buscar en la DB.
+
+```shell
+{
+	"id": 1,
+	"full_name": "Maluma Diva",
+	"email": "divinayarrecha@gmail.com",
+	"password": "superpasiva",
+	"user_name": "Bendecida y Afortunada",
+	"image": "https://www.softzone.es/app/uploads/2018/04/guest.png",
+	"is_admin": null,
+	"is_plan_pay": true,
+	"is_delete": false,
+	"planId": 1,
+	"plan": {
+		"id": 1,
+		"name": "Adulto mayor",
+		"members": 2,
+		"price": 120,
+		"description": "Pareja de adultos mayores",
+		"code": 1003,
+		"consultations_per_patients": 20
+	},
+	"paids": [
+		{
+			"id": 1,
+			"date": "2019-07-10T14:47:58.000Z",
+			"description": "pago de plan adulto mayor",
+			"price": 50000,
+			"paymentId": 1,
+			"userId": 1,
+			"planId": null
+		}
+	]
+}
+```
+
+- `post => /user` => Este endpoint permite crear un usuario. Recibe por body un objeto con la siguiente información:
+
+`full_name`: nombre completo del usuario.
+
+`email`: correo electrónico del usuario.
+
+`password`: contraseña del usuario.
+
+`user_name`: nombre de usuario para la página.
+
+`image`: string con la url de la imagen del usuario.
+
+```shell
+{
+    "full_name": "Lionel Messi",
+    "email": "elguevodelmundo@gmail.com",
+    "password": "quetepasabobo",
+    "user_name": "Dios y yo",
+    "image": "https://www.softzone.es/app/uploads/2018/04/guest.png"
+}
+```
+
+Devuelve:
+
+```shell
+{
+	"message": "El Usuario a sido creado con exito"
+}
+```
+
+<!-- TODO -->
+<!-- - `put => /user/:id/isAdmin` => Este endpoint permite setear a un usuario como administrador cambiando el valor de la propiedad `is_admin` como verdadero o falso, de acuerdo a lo que se necesite. Recibe  -->
+<!-- TODO -->
+<!-- - `delete => /user/:id/delete` => Este endpoint   -->
+
+## Endpoints de la ruta _/plan_:
+
+- `get => /plan || /plan?code=` => Este endpoint permite 2 acciones diferentes; por un lado permite buscar un plan a través de su `code` si se envía por query; y por otro lado devuelve un array con todos los planes disponibles.
+
+```shell
+[
+	{
+		"id": 1,
+		"name": "Adulto mayor",
+		"members": 2,
+		"price": 120,
+		"description": "Pareja de adultos mayores",
+		"code": 1003,
+		"consultations_per_patients": 20
+	},
+	{
+		"id": 2,
+		"name": "Full Care",
+		"members": 5,
+		"price": 100,
+		"description": "Familiar",
+		"code": 1001,
+		"consultations_per_patients": 20
+	}
+]
+```
+
+- `get => /plan/:id` => Este endpoint permite buscar un plan por su id. Recibe por params el id del plan a buscar y devuelve un objeto con la información del mismo:
+
+```shell
+{
+	"id": 1,
+	"name": "Adulto mayor",
+	"members": 2,
+	"price": 120,
+	"description": "Pareja de adultos mayores",
+	"code": 1003,
+	"consultations_per_patients": 20
+}
+```
+
+- `pots => /plan` => Este endpoint permite crear un nuevo plan. Recibe un objeto con la siguiente información:
+
+`name`: nombre del plan.
+
+`members`: cantidad de personas que permite afiliar por el plan.
+
+`price`: costo del plan. El tipo de dato es un INTEGER, por lo que no se recomienda usar separadores de miles.
+
+`description`: descripción del plan.
+
+`code`: código correlativo del plan.
+
+`consultations_per_patients`: _este dato está próximo a ser eliminado porque no se implementará_. Cantidad de consultas por paciente.
+
+```shell
+{
+    "name": "Full Care",
+    "members": 5,
+    "price": 100.000,
+    "description": "Familiar",
+    "code": 1001,
+	"consultations_per_patients": 20
+}
+```
+
+Devuelve:
+
+```shell
+{
+	"id": 2,
+	"name": "Full Care",
+	"members": 5,
+	"price": 100,
+	"description": "Familiar",
+	"code": 1001,
+	"consultations_per_patients": 20
+}
+```
+
+- `put => /plan` => Este endpoint recibe por body un objeto que incluye: id, name, members, price, description, code y consultations_per_patients y permite actualizar el plan con la nueva información que reciba.
+
+Devuelve:
+
+```shell
+{
+	"id": 2,
+	"name": "Max Care",
+	"members": 5,
+	"price": 500,
+	"description": "Familiar",
+	"code": 1001,
+	"consultations_per_patients": 30
+}
+```
+
+- `delete => /plan/:id` => Este endpoint permite eliminar un plan. Recibe por params el id del plan a borrar.
+  Devuelve:
+
+```shell
+"Se elimino el plan con el id = 1"
+```
+
+## Endpoints de la ruta _/analysis_:
+
+- `get => /analysis` => Este endpoint devuelve un array con todos los análisis clínicos.
+
+```shell
+[
+	{
+		"id": 1,
+		"name": "endoscopía",
+		"speciality": "gastroenterología",
+		"price": 200
+	},
+	{
+		"id": 2,
+		"name": "ecografía articular",
+		"speciality": "kinesiología",
+		"price": 200
+	},
+	{
+		"id": 3,
+		"name": "hematología completa",
+		"speciality": "clínica médica",
+		"price": 200
+	},
+	{
+		"id": 4,
+		"name": "electroencefalograma",
+		"speciality": "neurología",
+		"price": 200
+	}
+]
+```
+
+- `post => /analysis` => Este endpoint permite crear un nuevo análisis clinico. Recibe un objeto que contiene:
+
+`name`: nombre del análisis.
+
+`speciality`: especialidad asociada a ese análisis.
+
+`price`: costo de ese análisis.
+
+```shell
+{
+    "name": "electroencefalograma",
+    "speciality": "neurología",
+    "price": 200
+}
+```
+
+Devuelve:
+
+```shell
+{
+	"message": "El registro del Analisis se ha creado exitosamente"
+}
+```
+
+- `put => /analysis` => Este endpoint permite actualizar un análisis específico. Recibe por body el id, name, speciality y price.
+  Recibe por body:
+
+```shell
+{
+	"id": 1
+    "name": "electroencefalograma",
+    "speciality": "neurología",
+    "price": 300
+}
+```
+
+Devuelve:
+
+```shell
+{
+	"message": "modificado con exito"
+}
+```
+
+<!-- TODO -->
+<!-- - `delete => /analysis/:id` => Este endpoint permite -->
+
+## Endpoints de la ruta _/paid_:
+
+- `get => /paid/:id` => Este endpoint recibe por params el id de un pago almacenado en el registro. Devuelve:
+
+```shell
+{
+	"id": 16,
+	"date": "2019-07-10T14:47:58.000Z",
+	"description": "pago de análisis clínico",
+	"price": 200,
+	"paymentId": 16,
+	"userId": 2,
+	"planId": null
+}
+```
+
+- `get => /paid` => Este endpoint recibe por body el id de un usuario específico y permite ubicar el histórico de pagos de ese usuario.
+  Recibe:
+
+```shell
+{
+	"userId": 2
+}
+```
+
+Devuelve:
+
+```shell
+[
+	{
+		"id": 2,
+		"date": "2019-07-10T14:47:58.000Z",
+		"description": "pago de plan full care",
+		"price": 100,
+		"paymentId": 2,
+		"userId": 2,
+		"planId": 2
+	},
+	{
+		"id": 16,
+		"date": "2019-07-10T14:47:58.000Z",
+		"description": "pago de análisis clínico",
+		"price": 200,
+		"paymentId": 16,
+		"userId": 2,
+		"planId": null
+	},
+	{
+		"id": 17,
+		"date": "2019-07-10T14:47:58.000Z",
+		"description": "pago de análisis clínico",
+		"price": 200,
+		"paymentId": 17,
+		"userId": 2,
+		"planId": null
+	}
+]
+```
+
+## Endpoints de la ruta _/ticketAnalysis_:
+
+- `get => /ticketAnalysis` => Este endpoint devuelve un array con todos los turnos para análisis clínicos solicitados.
+  Devuelve:
+
+```shell
+[
+	{
+		"id": 14,
+		"date": "2023-04-13",
+		"hour": "09:55",
+		"price": 200,
+		"is_paid": true,
+		"is_delete": false,
+		"analysisId": 2,
+		"paymentId": 16,
+		"patientId": 2,
+		"analysis": {
+			"id": 2,
+			"name": "ecografía articular",
+			"speciality": "kinesiología",
+			"price": 200
+		},
+		"payment": {
+			"id": 16,
+			"description": "pago de análisis clínico",
+			"price": 200,
+			"code": 69754896,
+			"userId": 2
+		},
+		"patient": {
+			"id": 2,
+			"dni": 5986487,
+			"full_name": "Bernardo Brocheit",
+			"gender": "masculino",
+			"age": 53,
+			"birthday": "1970-12-12",
+			"phone": "2659749851",
+			"address": "Lima, Perú",
+			"is_delete": false,
+			"planId": null,
+			"userId": 2
+		}
+	},
+	{
+		"id": 16,
+		"date": "2023-04-13",
+		"hour": "10:55",
+		"price": 200,
+		"is_paid": false,
+		"is_delete": false,
+		"analysisId": 1,
+		"paymentId": null,
+		"patientId": 1,
+		"analysis": {
+			"id": 1,
+			"name": "endoscopía",
+			"speciality": "gastroenterología",
+			"price": 200
+		},
+		"payment": null,
+		"patient": {
+			"id": 1,
+			"dni": 79563254,
+			"full_name": "Maluma la del Barrio",
+			"gender": "empoderada",
+			"age": 25,
+			"birthday": "1998-02-06",
+			"phone": "859874621",
+			"address": "Colombia",
+			"is_delete": false,
+			"planId": null,
+			"userId": 1
+		}
+	}
+]
+```
+
+- `get => /ticketAnalysis/:id` => Este endpoint permite buscar un turno para análisis por id. Recibe por params el id del turno y devuelve un objeto con la información del turno.
+
+```shell
+{
+	"id": 16,
+	"date": "2023-04-13",
+	"hour": "10:55",
+	"price": 200,
+	"is_paid": false,
+	"is_delete": false,
+	"analysisId": 1,
+	"paymentId": null,
+	"patientId": 1,
+	"analysis": {
+		"id": 1,
+		"name": "endoscopía",
+		"speciality": "gastroenterología",
+		"price": 200
+	},
+	"payment": null,
+	"patient": {
+		"id": 1,
+		"dni": 79563254,
+		"full_name": "Maluma la del Barrio",
+		"gender": "empoderada",
+		"age": 25,
+		"birthday": "1998-02-06",
+		"phone": "859874621",
+		"address": "Colombia",
+		"is_delete": false,
+		"planId": null,
+		"userId": 1
+	}
+}
+```
+
+- `post => /ticketAnalysis/createTicketAnalisys` => Este endpoint permite crear un nuevo turno para análisis clínico. Recibe por body un objeto con la siguiente información:
+
+`idAnalysis`: el id del análisis que seleccionó.
+
+`idPatient`: el id del paciente que se realizará el estudio.
+
+`date`: fecha del estudio en el formato indicado en el ejemplo.
+
+`hour`: hora del estudio.
+
+`price`: costo del estudio.
+
+```shell
+{
+        "idAnalysis": "1",
+        "idPatient": "1",
+        "date": "2023-04-13",
+        "hour": "10:55",
+        "price": 200
+}
+```
+
+Devuelve:
+
+```shell
+"Turno creado exitosamente"
+```
+
+- `delete => /ticketAnalysis/:id/delete` => Este endpoint permite borrar un turno para análisis clínico. Recibe por params el id del turno a borrar. Devuelve:
+
+```shell
+"El turno para análisis clinico fue borrado exitosamente"
+```
+
+## Endpoints de la ruta _/payment_:
+
+- `get => /payment` => Este endpoint recibe por body el id del usuario y permite consultar pagos asociados a ese usuario.
+  Recibe:
+
+```shell
+{
+	"userId": 2
+}
+```
+
+Devuelve:
+
+```shell
+[
+	{
+		"id": 2,
+		"description": "pago de plan full care",
+		"price": 100,
+		"code": 75982146,
+		"userId": 2
+	},
+	{
+		"id": 16,
+		"description": "pago de análisis clínico",
+		"price": 200,
+		"code": 69754896,
+		"userId": 2
+	},
+]
+```
+
+- `get => /payment/:id` => Este endpoint recibe por params el id del pago específico a consultar.
+  Devuelve:
+
+```shell
+{
+	"id": 16,
+	"description": "pago de análisis clínico",
+	"price": 200,
+	"code": 69754896,
+	"userId": 2
+}
+```
+
+- `post => /payment/createPaymentPlan` => Este endpoint permite registrar el pago realizado por un usuario por concepto de "pago de algún plan". Recibe un objeto con la siguiente información:
+
+`user`: id del usuario que realizó el pago para la adquisición del plan.
+
+`planId`: id del plan que contrató.
+
+`description`: concepto o breve descripción del pago. Proviene en el objeto con la aprobación que envía la pasarella de MercadoPago.
+
+`price`: monto cancelado. Proviene en el objeto con la aprobación que envía la pasarella de MercadoPago.
+
+`code`: id del objeto que envía MercadoPago.
+
+`date`: fecha de creación de la incidencia. Proviene en el objeto con la aprobación que envía la pasarella de MercadoPago.
+
+```shell
+{
+    "user": 2,
+    "planId": 2,
+    "description": "pago de plan full care",
+    "price": 100.000,
+    "code": 75982146,
+	"date": "2019-07-10T14:47:58.000Z"
+}
+```
+
+Devuelve:
+
+```shell
+"El pago del plan se ha realizado con éxito"
+```
+
+- `post => /payment/createPaymentAnalysis` => Este endpoint permite registrar el pago realizado por un usuario por concepto de "pago de análisis clínicos". Recibe un objeto con la siguiente información:
+
+`user`: id del usuario que realizó el pago para la adquisición del plan.
+
+`ticketsId`: id del turno clínico.
+
+`description`: concepto o breve descripción del pago. Proviene en el objeto con la aprobación que envía la pasarella de MercadoPago.
+
+`price`: monto cancelado. Proviene en el objeto con la aprobación que envía la pasarella de MercadoPago.
+
+`code`: id del objeto que envía MercadoPago.
+
+`date`: fecha de creación de la incidencia. Proviene en el objeto con la aprobación que envía la pasarella de MercadoPago.
+
+```shell
+{
+    "ticketsIds": 16,
+    "user": 2,
+    "description": "pago de análisis clínico",
+    "price": 200,
+    "code": 69754896,
+	"date": "2019-07-10T14:47:58.000Z"
+}
+```
+
+Devuelve:
+
+```shell
+"El pago del análisis se ha realizado con éxito"
+```

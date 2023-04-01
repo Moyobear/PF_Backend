@@ -106,13 +106,14 @@ const payment = {
 };
 
 // *Este es el objeto que se recibe de la plataforma de pago de MercadoPago cuando la transacción es correcta.
+// ! VERIFICAR CON EL QUOKKA
 // *Deben enviar al Back la siguiente info para crear el pago, en este caso de un plan:
-let userId = 5; // *Id del usuario. Esto es un ejemplo para que funcionara con el Quoka, OJO!
+let userId = 5; // *Id del usuario. Esto es un ejemplo para que funcionara con el Quokka, OJO!
 let planId = 2; // *Id del plan. Esto es un ejemplo para que funcionara con el Quoka, OJO!
 
 // *El price, el code,la description y date lo extraen de este objeto de arriba como se indica acá abajo:
 
-const data_de_ejemplo = {
+const data_de_ejemplo_pago_de_plan = {
   user: userId,
   planId: planId,
   description: payment.description,
@@ -121,4 +122,19 @@ const data_de_ejemplo = {
   date: payment.date_created,
 };
 
-console.log(data_de_ejemplo);
+console.log(data_de_ejemplo_pago_de_plan);
+
+// *Para el caso de el pago de un análisis clínico, el objeto que se debe enviar es un poco diferente; allí deben enviar la siguiente info:
+
+let ticketsId = 2; // *Id del ticketAnalysis. Esto es un ejemplo para que funcionara con el Quokka, OJO!
+
+const data_de_ejemplo_pago_de_analysis = {
+  user: userId,
+  ticketsIds: ticketsId,
+  description: payment.description,
+  price: payment.transaction_amount,
+  code: payment.id,
+  date: payment.date_created,
+};
+
+console.log(data_de_ejemplo_pago_de_analysis);
