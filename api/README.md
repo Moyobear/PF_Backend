@@ -210,18 +210,37 @@ Devuelve:
 ]
 ```
 
-- `post => /doctor` => A este endpoint se envía por body un `objeto` con la info necesaria para crear al doctor.
+- `post => /doctor` => A este endpoint se envía por body un `objeto` con la info necesaria para crear al doctor. Es necesario que se envíe el `Id del usuario` para poder enlazarlo.
 
-En este caso:
+En este caso recibe:
+
+`idUser`: id del usuario al que pertenece.
+
+`dni`: hace referencia al Documento de Nacional de Identificación.
+
+`full_name`: nombre completo.
+
+`gender`: género.
+
+`birthday`: fecha de nacimiento.
+
+`age`: edad.
+
+`phone`: número telefónico.
+
+`address`: dirección.
+
+`image`: string con la dirección de la foto del doctor.
+
+`is_delivery`: hace referencia a si es prestador externo. Esta propiedad por defecto viene seteada en `false`, por lo que si el médico trabaja fuera de la clínica, debe poder setearse en `true` desde el front.
 
 `code`: hace referencia al código de Colégio de Médicos del doctor.
-
-`is_delivery`: hace referencia a si trabaja fuera de la clínica. Esta propiedad por defecto viene seteada en `false`, por lo que si el médico trabaja fuera de la clínica, depo poder setearse en `true` desde el front.
 
 `especialities`: se refiere a las especialidades del doctor; si es una sola especialidad recibe un `string`, sin embargo si son más de una, puede recibir un array de `strings`.
 
 ```shell
 {
+	"idUser": 1,
     "dni": 3698754,
     "code": 236514,
     "full_name": "Paco Gerlo",
@@ -297,6 +316,33 @@ Devuelve un objeto con la siguiente información:
 ```shell
 [
 	{
+		"id": 2,
+		"dni": 5986487,
+		"full_name": "Bernardo Brocheit",
+		"gender": "masculino",
+		"age": 53,
+		"birthday": "1970-12-12",
+		"phone": "2659749851",
+		"address": "Lima, Perú",
+		"is_delete": false,
+		"planId": null,
+		"userId": 2,
+		"ticketMedicals": [],
+		"user": {
+			"id": 2,
+			"full_name": "Lionel Messi",
+			"email": "elguevodelmundo@gmail.com",
+			"password": "quetepasabobo",
+			"user_name": "Dios y yo",
+			"image": "https://www.softzone.es/app/uploads/2018/04/guest.png",
+			"is_admin": null,
+			"is_plan_pay": true,
+			"is_delete": false,
+			"planId": 2
+		},
+		"plan": null
+	},
+	{
 		"id": 1,
 		"dni": 79563254,
 		"full_name": "Maluma la del Barrio",
@@ -305,53 +351,22 @@ Devuelve un objeto con la siguiente información:
 		"birthday": "1998-02-06",
 		"phone": "859874621",
 		"address": "Colombia",
-		"consultations_available": 10,
 		"is_delete": false,
 		"planId": null,
-		"userId": null,
-		"ticketMedicals": [
-			{
-				"id": 2,
-				"title": "sarampión",
-				"observations": "Consulta con dermatología",
-				"date": "2023-06-10",
-				"hour_start": "08:30",
-				"is_confirmed": false,
-				"is_delete": true,
-				"patientId": 1
-			},
-			{
-				"id": 1,
-				"title": "Sarna",
-				"observations": "Consulta con dermatología",
-				"date": "2023-06-10",
-				"hour_start": "08:00",
-				"is_confirmed": true,
-				"is_delete": true,
-				"patientId": 1
-			},
-			{
-				"id": 3,
-				"title": "sarampión",
-				"observations": "Consulta con dermatología",
-				"date": "2023-06-10",
-				"hour_start": "08:30",
-				"is_confirmed": true,
-				"is_delete": true,
-				"patientId": 1
-			},
-			{
-				"id": 4,
-				"title": "sarampión",
-				"observations": "Consulta con dermatología",
-				"date": "2023-06-10",
-				"hour_start": "08:30",
-				"is_confirmed": true,
-				"is_delete": true,
-				"patientId": 1
-			}
-		],
-		"user": null,
+		"userId": 1,
+		"ticketMedicals": [],
+		"user": {
+			"id": 1,
+			"full_name": "Maluma Diva",
+			"email": "divinayarrecha@gmail.com",
+			"password": "superpasiva",
+			"user_name": "Bendecida y Afortunada",
+			"image": "https://www.softzone.es/app/uploads/2018/04/guest.png",
+			"is_admin": null,
+			"is_plan_pay": true,
+			"is_delete": false,
+			"planId": 1
+		},
 		"plan": null
 	}
 ]
@@ -377,7 +392,6 @@ Devuelve:
 	"birthday": "1980-06-03",
 	"phone": "795486524",
 	"address": "Madrid, España",
-	"consultations_available": 10,
 	"is_delete": false,
 	"planId": null,
 	"userId": null,
@@ -391,61 +405,30 @@ Devuelve:
 
 ```shell
 {
-	"id": 1,
-	"dni": 79563254,
-	"full_name": "Maluma la del Barrio",
-	"gender": "empoderada",
-	"age": 25,
-	"birthday": "1998-02-06",
-	"phone": "859874621",
-	"address": "Colombia",
-	"consultations_available": 10,
+	"id": 4,
+	"dni": 6598425,
+	"full_name": "Gerard Pique",
+	"gender": "pendejo",
+	"age": 43,
+	"birthday": "1980-12-23",
+	"phone": "6598532458",
+	"address": "Madrid, España",
 	"is_delete": false,
 	"planId": null,
-	"userId": null,
-	"ticketMedicals": [
-		{
-			"id": 2,
-			"title": "urticaria",
-			"observations": "Consulta con dermatología",
-			"date": "2023-06-10",
-			"hour_start": "08:30",
-			"is_confirmed": false,
-			"is_delete": true,
-			"patientId": 1
-		},
-		{
-			"id": 1,
-			"title": "Sarna",
-			"observations": "Consulta con dermatología",
-			"date": "2023-06-10",
-			"hour_start": "08:00",
-			"is_confirmed": true,
-			"is_delete": true,
-			"patientId": 1
-		},
-		{
-			"id": 3,
-			"title": "sarampión",
-			"observations": "Consulta con dermatología",
-			"date": "2023-06-10",
-			"hour_start": "08:30",
-			"is_confirmed": true,
-			"is_delete": true,
-			"patientId": 1
-		},
-		{
-			"id": 4,
-			"title": "dermatitis",
-			"observations": "Consulta con dermatología",
-			"date": "2023-06-10",
-			"hour_start": "08:30",
-			"is_confirmed": true,
-			"is_delete": true,
-			"patientId": 1
-		}
-	],
-	"user": null,
+	"userId": 4,
+	"ticketMedicals": [],
+	"user": {
+		"id": 4,
+		"full_name": "Kylian Mbappé",
+		"email": "putoenlacancha@gmail.com",
+		"password": "mangueraasesina",
+		"user_name": "Negro Manguera",
+		"image": "https://www.softzone.es/app/uploads/2018/04/guest.png",
+		"is_admin": null,
+		"is_plan_pay": false,
+		"is_delete": false,
+		"planId": null
+	},
 	"plan": null
 }
 ```
@@ -454,20 +437,34 @@ Devuelve:
 
 En este caso:
 
-`consultations_available`: hace referencia a la cantidad de consultas disponibles de acuerdo al plan seleccionado por el usuario.
+`IdUser`: id del usuario al que pertenece.
+
+`dni`: hace referencia al Documento de Nacional de Identificación.
+
+`full_name`: nombre completo.
+
+`gender`: género.
+
+`birthday`: fecha de nacimiento.
+
+`age`: edad.
+
+`phone`: número telefónico.
+
+`address`: dirección.
 
 Debe recibir:
 
 ```shell
 {
-    "dni": 79563254,
-    "full_name": "Maluma la del Barrio",
-    "gender": "empoderada",
-    "birthday": "1998-02-06",
-    "age": 25,
-    "phone": 859874621,
-    "address": "Colombia",
-    "consultations_available": 10
+	"idUser": 1,
+    "dni": 43183214,
+    "full_name": "Jonathan Rodriguez",
+    "gender": "masculino",
+    "birthday": "1983-05-04",
+    "age": 40,
+    "phone": 256589742541,
+    "address": "Aragua, Venezuela"
 }
 ```
 
@@ -478,19 +475,28 @@ Devuelve:
 	"message": "El registro del paciente se ha creado exitosamente",
 	"patient_created": {
 		"id": 1,
-		"dni": 79563254,
-		"full_name": "Maluma la del Barrio",
-		"gender": "empoderada",
-		"age": 25,
-		"birthday": "1998-02-06",
-		"phone": "859874621",
-		"address": "Colombia",
-		"consultations_available": 10,
+		"dni": 43183214,
+		"full_name": "Jonathan Rodriguez",
+		"gender": "masculino",
+		"age": 40,
+		"birthday": "1983-05-04",
+		"phone": "256589742541",
+		"address": "Aragua, Venezuela",
 		"is_delete": false,
 		"planId": null,
-		"userId": null,
-		"ticketMedicals": [],
-		"user": null,
+		"userId": 1,
+		"user": {
+			"id": 1,
+			"full_name": "Lionel Messi",
+			"email": "elguevodelmundo@gmail.com",
+			"password": "quetepasabobo",
+			"user_name": "Dios y yo",
+			"image": "https://www.softzone.es/app/uploads/2018/04/guest.png",
+			"is_admin": null,
+			"is_plan_pay": false,
+			"is_delete": false,
+			"planId": null
+		},
 		"plan": null
 	}
 }
@@ -546,7 +552,6 @@ Devuelve:
 			"birthday": "1998-02-06",
 			"phone": "859874621",
 			"address": "Colombia",
-			"consultations_available": 10,
 			"is_delete": false,
 			"planId": null,
 			"userId": null
@@ -607,7 +612,6 @@ Devuelve:
 		"birthday": "1998-02-06",
 		"phone": "859874621",
 		"address": "Colombia",
-		"consultations_available": 10,
 		"is_delete": false,
 		"planId": null,
 		"userId": null
@@ -666,6 +670,12 @@ Recibe:
     "hour_start": "08:30",
     "hour_end": "09:00"
 }
+```
+
+Devuelve:
+
+```shell
+"Turno creado exitosamente"
 ```
 
 - `put => /ticketMedical/confirmTicket` => Este endpoint permite confirmar un turno médico. Recibe un `id` por body. Al confirmarse el turno, deja de aparecer en la lista de turnos y los horarios relacionados a ese turno se modifican a `is_delete: true`.
