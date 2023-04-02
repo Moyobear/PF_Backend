@@ -109,7 +109,7 @@ const isAdmin = async (id, is_Admin) => {
     0
   );
 
-  if (countAdmins > 1 && is_Admin == "false") {
+  if (countAdmins > 1 && is_Admin === false) {
     const result = await User.update(
       {
         is_admin: false,
@@ -121,7 +121,7 @@ const isAdmin = async (id, is_Admin) => {
       }
     );
     return { message: "El usuario ya no es Administador" };
-  } else if (is_Admin == "true") {
+  } else if (is_Admin === true) {
     const result = await User.update(
       {
         is_admin: true,
