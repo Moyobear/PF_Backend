@@ -838,10 +838,29 @@ Devuelve:
 }
 ```
 
-<!-- TODO -->
-<!-- - `put => /user/:id/isAdmin` => Este endpoint permite setear a un usuario como administrador cambiando el valor de la propiedad `is_admin` como verdadero o falso, de acuerdo a lo que se necesite. Recibe  -->
-<!-- TODO -->
-<!-- - `delete => /user/:id/delete` => Este endpoint   -->
+- `put => /user/isAdmin` => Este endpoint permite setear a un usuario como administrador cambiando el valor de la propiedad `is_admin` como verdadero o falso, de acuerdo a lo que se necesite. Recibe por body el id del usuario y la propiedad isAdmin con el valor asignado.
+
+```shell
+{
+	"id": 1,
+	"isAdmin": true
+}
+```
+
+Devuelve:
+
+```shell
+{
+	"message": "El usuario ya es Administador"
+}
+```
+
+- `delete => /user/:id` => Este endpoint permite borrar a un usuario enviando el id del usuario por params.
+  Devuelve:
+
+```shell
+"El usuario fue borrado exitosamente"
+```
 
 ## Endpoints de la ruta _/plan_:
 
@@ -1023,8 +1042,13 @@ Devuelve:
 }
 ```
 
-<!-- TODO -->
-<!-- - `delete => /analysis/:id` => Este endpoint permite -->
+- `delete => /analysis/:id` => Este endpoint permite borrar un análisis clinico enviando el id del análisis por params.
+
+Devuelve:
+
+```shell
+"El Analisis fue borrado exitosamente"
+```
 
 ## Endpoints de la ruta _/paid_:
 
