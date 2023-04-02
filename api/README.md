@@ -731,16 +731,27 @@ Devuelve:
 
 - `put => /speciality` => Este permite modificar una especialidad.
   Recibe por body el `id` de la especialidad a modificar y el `nuevo valor` a setear.
+  Recibe:
 
 ```shell
 {
-    "id": 1,
-    "speciality": "obstetricia"
+	"id": 2,
+	"speciality": "cardiología"
 }
 ```
 
-<!-- TODO -->
-<!-- - `delete => /speciality` => A este endpoint se envía por params un `id` para buscar al paciente a borrar; setea su atributo `is_delete` como true, impidiendo que pueda mostrarse de nuevo (borrado lógico) POR MODIFICAR. -->
+```shell
+{
+	"message": "modificado con exito"
+}
+```
+
+- `delete => /speciality/:id` => A este endpoint se envía por params un `id` para buscar la especialidad a borrar; setea su atributo `is_delete` como true, impidiendo que pueda mostrarse de nuevo (borrado lógico).
+  Devuelve:
+
+```shell
+"La Especialidad fue borrado exitosamente"
+```
 
 ## Endpoints de la ruta _/user_:
 

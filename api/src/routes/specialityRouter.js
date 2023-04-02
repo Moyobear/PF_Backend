@@ -18,6 +18,6 @@ specialityRouter.post("/", validatorCreateSpeciality, POST_SPECIALITY);
 
 specialityRouter.put("/", PUT_SPECIALITY);
 
-specialityRouter.delete("/", DELETE_SPECIALITY);
+specialityRouter.delete("/:id", DELETE_SPECIALITY);
 
 module.exports = specialityRouter;
