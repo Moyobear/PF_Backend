@@ -16,15 +16,10 @@ analysisRouter.get("/", GET_ANALYSIS);
 
 analysisRouter.post("/", validatorCreateAnalysis, POST_ANALYSIS);
 
-analysisRouter.post("/", POST_ANALYSIS)
+analysisRouter.post("/", POST_ANALYSIS);
 
+analysisRouter.put("/", PUT_ANALYSIS);
 
-analysisRouter.put("/", PUT_ANALYSIS)
-
-
-analysisRouter.delete("/:id", DELETE_ANALYSIS)
->>>>>>> LucasDev
-
-
+analysisRouter.delete("/:id", DELETE_ANALYSIS);
 
 module.exports = analysisRouter;

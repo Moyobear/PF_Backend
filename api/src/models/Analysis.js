@@ -21,13 +21,13 @@ module.exports = (sequelize) => {
       },
       price: {
         type: DataTypes.INTEGER,
-        allowNull: false, 
+        allowNull: false,
       },
       is_delete: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
       },
     },
-  )
-    },
     { timestamps: false }
+  );
+};

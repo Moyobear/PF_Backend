@@ -17,9 +17,7 @@ const filterAnalysisDB = (item) => {
 
 //getAnalysis devuelve todos los campos que tenga la tabla Analysis
 const getAnalysis = async () =>{
-    const request = await Analysis.findAll({
-        
-    })
+    const request = await Analysis.findAll()
     let filtered = request
     .map((item) => filterAnalysisDB(item))
     .filter((item) => item.is_delete !== true)
