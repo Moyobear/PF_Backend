@@ -11,11 +11,11 @@ module.exports = (sequelize) => {
         autoIncrement: true,
         unique: true,
       },
-      comment: {
+      comments: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      points: {
+      rating: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
