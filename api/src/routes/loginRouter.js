@@ -6,3 +6,5 @@ const loginRouter = Router();
 
 loginRouter.get("/", jwtCheck, Login);
 loginRouter.put("/", jwtCheck, SignUp)
+
+module.exports = loginRouter;
