@@ -169,6 +169,16 @@ const validatorCreateUser = (req, res, next) => {
   next();
 };
 
+// *Validador para crear un comentario o review de un usuario:
+const validatorCreateComment = (req, res, next) => {
+  const { comment, rating } = req.body;
+
+  if (![comment, rating].every(Boolean))
+    return res.status(404).json({ error: "Falta enviar datos obligatorios" });
+
+  next();
+};
+
 module.exports = {
   validatorCreateDoctor,
   validatorUpdateDoctor,
@@ -182,4 +192,5 @@ module.exports = {
   validatorCreatePlan,
   validatorCreateSpeciality,
   validatorCreateUser,
+  validatorCreateComment,
 };

@@ -12,6 +12,7 @@ const TicketMedicalModel = require("./models/TicketMedical ");
 const TicketAnalysislModel = require("./models/TicketAnalysis");
 const UserModel = require("./models/User");
 const AnalysisModel = require("./models/Analysis");
+const CommentModel = require("./models/Comment");
 
 require("dotenv").config();
 const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME, DB_PORT } = process.env;
@@ -35,6 +36,7 @@ TicketMedicalModel(sequelize);
 TicketAnalysislModel(sequelize);
 UserModel(sequelize);
 AnalysisModel(sequelize);
+CommentModel(sequelize);
 
 const basename = path.basename(__filename);
 
@@ -73,6 +75,7 @@ const {
   TicketAnalysis,
   User,
   Analysis,
+  Comment,
 } = sequelize.models;
 
 // *Aca vendrian las relaciones:
@@ -82,6 +85,10 @@ TicketMedical.hasOne(Schedule, { onDelete: "cascade" });
 Schedule.belongsTo(TicketMedical, { onDelete: "cascade" });
 
 // *Relaciones 1 a N:
+// ?User vs Comment = 1 : N
+User.hasMany(Comment);
+Comment.belongsTo(User);
+
 // ?Patient vs TicketMedical = 1 : N
 Analysis.hasMany(TicketAnalysis);
 TicketAnalysis.belongsTo(Analysis);

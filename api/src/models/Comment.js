@@ -11,7 +11,7 @@ module.exports = (sequelize) => {
         autoIncrement: true,
         unique: true,
       },
-      comments: {
+      comment: {
         type: DataTypes.STRING,
         allowNull: false,
       },
