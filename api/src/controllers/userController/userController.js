@@ -100,8 +100,8 @@ const createUser = async (full_name, email, password, user_name, image) => {
   }
 };
 
+
 const isAdmin = async (id, is_Admin) => {
-  // esto hace que la app nunca se quede sin admin, siempre tiene que existir uno almenos
   let allUser = await getAllUser();
   let user = await User.findByPk(id)
 

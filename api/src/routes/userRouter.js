@@ -17,7 +17,7 @@ userRouter.get("/", GET_USER);
 
 userRouter.get("/:id", GET_USER_ID);
 
-userRouter.post("/",  POST_USER);
+userRouter.post("/", validatorCreateUser, POST_USER);
 
 userRouter.put('/isAdmin', PUT_ISADMIN)
 
