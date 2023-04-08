@@ -6,7 +6,6 @@ const {
   Plan,
 } = require("../../db");
 const { Op } = require("sequelize");
-const TicketAnalysis = require("../../models/TicketAnalysis");
 
 // *Este helper nos permite traer los Pacientes de la base de datos e implementarlo en las rutas que lo requieran:
 const getPatients = async () => {
