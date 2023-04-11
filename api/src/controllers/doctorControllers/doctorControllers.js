@@ -1,4 +1,4 @@
-const { Doctor, Speciality, Schedule, User } = require("../../db");
+const { Doctor, Speciality, Schedule, User, Day } = require("../../db");
 const { Op } = require("sequelize");
 
 // *Este helper nos permite traer los Medicos de la base de datos, filtrar a través de la propiedad is_delete,  implementarlo en las rutas que lo requieran:
@@ -7,14 +7,20 @@ const getDoctors = async () => {
     include: [
       {
         model: Speciality,
+        attributes: ["speciality"],
         through: { attributes: [] },
       },
       {
         model: Schedule,
-        through: { attributes: [] },
+        // where: { is_delete: false },
       },
       {
         model: User,
+      },
+      {
+        model: Day,
+        attributes: ["day"],
+        through: { attributes: [] },
       },
     ],
   });
@@ -41,14 +47,20 @@ const searchDoctorByName = async (full_name) => {
     include: [
       {
         model: Speciality,
+        attributes: ["speciality"],
         through: { attributes: [] },
       },
       {
         model: Schedule,
-        through: { attributes: [] },
+        // where: { is_delete: false },
       },
       {
         model: User,
+      },
+      {
+        model: Day,
+        attributes: ["day"],
+        through: { attributes: [] },
       },
     ],
   });
@@ -66,14 +78,20 @@ const findDni = async (dni) => {
     include: [
       {
         model: Speciality,
+        attributes: ["speciality"],
         through: { attributes: [] },
       },
       {
         model: Schedule,
-        through: { attributes: [] },
+        // where: { is_delete: false },
       },
       {
         model: User,
+      },
+      {
+        model: Day,
+        attributes: ["day"],
+        through: { attributes: [] },
       },
     ],
   });
@@ -97,14 +115,19 @@ const getDoctorById = async (id) => {
     include: [
       {
         model: Speciality,
+        attributes: ["speciality"],
         through: { attributes: [] },
       },
       {
         model: Schedule,
-        through: { attributes: [] },
       },
       {
         model: User,
+      },
+      {
+        model: Day,
+        attributes: ["day"],
+        through: { attributes: [] },
       },
     ],
   });
@@ -128,7 +151,10 @@ const createDoctor = async (
   address,
   image,
   specialities,
-  is_delivery
+  is_delivery,
+  day,
+  is_morning,
+  is_evening
 ) => {
   let newDoctor = await Doctor.create({
     code,
@@ -141,15 +167,24 @@ const createDoctor = async (
     address,
     image,
     is_delivery,
+    day,
+    is_morning,
+    is_evening,
   });
+
+  let days = await Day.findAll({ where: { day: day } });
+  await newDoctor.addDay(days);
+  await newDoctor.save();
 
   let specialitys = await Speciality.findAll({
     where: { speciality: specialities },
   });
   await newDoctor.addSpeciality(specialitys);
+  await newDoctor.save();
 
   const user = await User.findByPk(idUser);
   await newDoctor.setUser(user);
+  await newDoctor.save();
 
   const doctor_created = await Doctor.findOne({
     where: { full_name: { [Op.iLike]: `%${full_name}%` } },
@@ -157,6 +192,11 @@ const createDoctor = async (
       {
         model: Speciality,
         attributes: ["speciality"],
+        through: { attributes: [] },
+      },
+      {
+        model: Day,
+        attributes: ["day"],
         through: { attributes: [] },
       },
       { model: User },
@@ -200,12 +240,11 @@ const deleteDoctor = async (id) => {
   }
 };
 
-// *Este controller permite borrar TODOS los horarios de un doctor a través del Id del doctor:
-const deleteSchedule = async (id) => {
+// *Este controller permite borrar TODOS los turnos de un doctor de una fecha en concreto:
+const deleteSchedule = async (id, date) => {
   const request = await Doctor.findByPk(id, {
     include: {
       model: Schedule,
-      through: { attributes: [] },
     },
   });
   await request.schedules.forEach((item) => {
@@ -214,8 +253,43 @@ const deleteSchedule = async (id) => {
     });
     item.save();
   });
+  return "Se han borrado los turnos del Médico exitosamente";
+};
 
-  return "Se han borrado los horarios exitosamente";
+// *Este controller permite actualizar los días de trabajo de un doctor, y su turno indicando si trabaja en la mañana, en la tarde o en ambos:
+const updateMedicalGuard = async (doctorId, day, is_morning, is_evening) => {
+  const request = await Doctor.findByPk(doctorId);
+  await request.set({
+    is_morning: is_morning,
+    is_evening: is_evening,
+  });
+  await request.save();
+
+  let days = await Day.findAll({ where: { day: day } });
+  await request.addDay(day);
+  await request.save();
+
+  return [request];
+};
+
+const getDoctorsDeleted = async () => {
+  const request = await Doctor.findAll({
+    where: {
+      is_delete: true,
+    },
+  });
+
+  return request;
+};
+
+const recoverDoctor = async (id) => {
+  const request = await Doctor.findByPk(id);
+  await request.set({
+    is_delete: false,
+  });
+  await request.save();
+
+  return request;
 };
 
 module.exports = {
@@ -228,4 +302,7 @@ module.exports = {
   updateDoctor,
   deleteDoctor,
   deleteSchedule,
+  updateMedicalGuard,
+  getDoctorsDeleted,
+  recoverDoctor,
 };
