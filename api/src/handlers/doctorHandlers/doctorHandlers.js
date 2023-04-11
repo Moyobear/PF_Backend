@@ -129,10 +129,9 @@ const deleteScheduleHandler = async (req, res) => {
 
 const updateMedicalGuardHandler = async (req, res) => {
   try {
-    const { doctorId, day, is_morning, is_evening } = req.body;
+    const { doctorId, is_morning, is_evening } = req.body;
     const request = await updateMedicalGuard(
       doctorId,
-      day,
       is_morning,
       is_evening
     );

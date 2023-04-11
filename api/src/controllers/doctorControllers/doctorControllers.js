@@ -52,7 +52,6 @@ const searchDoctorByName = async (full_name) => {
       },
       {
         model: Schedule,
-        // where: { is_delete: false },
       },
       {
         model: User,
@@ -174,17 +173,13 @@ const createDoctor = async (
 
   let days = await Day.findAll({ where: { day: day } });
   await newDoctor.addDay(days);
-  await newDoctor.save();
 
   let specialitys = await Speciality.findAll({
     where: { speciality: specialities },
   });
   await newDoctor.addSpeciality(specialitys);
-  await newDoctor.save();
 
   const user = await User.findByPk(idUser);
-  await newDoctor.setUser(user);
-  await newDoctor.save();
 
   const doctor_created = await Doctor.findOne({
     where: { full_name: { [Op.iLike]: `%${full_name}%` } },
@@ -257,19 +252,29 @@ const deleteSchedule = async (id, date) => {
 };
 
 // *Este controller permite actualizar los días de trabajo de un doctor, y su turno indicando si trabaja en la mañana, en la tarde o en ambos:
-const updateMedicalGuard = async (doctorId, day, is_morning, is_evening) => {
-  const request = await Doctor.findByPk(doctorId);
+const updateMedicalGuard = async (doctorId, is_morning, is_evening) => {
+  const request = await Doctor.findByPk(doctorId, {
+    include: [
+      {
+        model: Speciality,
+        attributes: ["speciality"],
+        through: { attributes: [] },
+      },
+      {
+        model: Day,
+        attributes: ["day"],
+        through: { attributes: [] },
+      },
+      { model: User },
+    ],
+  });
   await request.set({
     is_morning: is_morning,
     is_evening: is_evening,
   });
   await request.save();
 
-  let days = await Day.findAll({ where: { day: day } });
-  await request.addDay(day);
-  await request.save();
-
-  return [request];
+  return request;
 };
 
 const getDoctorsDeleted = async () => {
