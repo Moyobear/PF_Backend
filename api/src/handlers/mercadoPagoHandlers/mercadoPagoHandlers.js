@@ -31,7 +31,7 @@ const POST_PAGO = async (req, res) => {
 
 
 
-        module.exports = {
-            POST_PAGO,
-            GET_FILE
-        };
+module.exports = {
+  POST_PAGO,
+  GET_FILE,
+};

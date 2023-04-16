@@ -4,8 +4,8 @@ const {PROD_ACCESS_TOKEN} = process.env
 
 // Configuramos el token de acceso de MercadoPago
 mercadopago.configure({
-    access_token: PROD_ACCESS_TOKEN,
-    });
+  access_token: PROD_ACCESS_TOKEN,
+});
 
     // Configuramos una ruta POST para crear una preferencia de pago en MercadoPago
 const createPago = async (id, title, description, picture_url, quantity, currency_id, unit_price) => {
@@ -34,8 +34,8 @@ let preference = {
 	binary_mode:  true,
 };
 
-const result = await mercadopago.preferences.create(preference)
-// Enviamos la preferencia a MercadoPago y devolvemos su ID en la respuesta JSON
+  const result = await mercadopago.preferences.create(preference);
+  // Enviamos la preferencia a MercadoPago y devolvemos su ID en la respuesta JSON
   return {
           mpresult:result,global: id
   }
@@ -107,5 +107,5 @@ const result = await mercadopago.preferences.create(preference)
 
 
 module.exports = {
-    createPago, 
-}
+  createPago,
+};
