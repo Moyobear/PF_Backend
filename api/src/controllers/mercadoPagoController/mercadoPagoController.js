@@ -106,6 +106,66 @@ let preference = {
 
 
 
+// ACA EMPIEZA EL CODIGO DE BERNA V1
+
+const mapObject = (obj, id) => {
+	const map = {            
+		id: obj.id,
+		title: obj.title,
+		description: obj.description,
+		picture_url: obj.picture_url,
+		quantity: obj.quantity,
+		unit_price: obj.price,
+		currency_id: id,
+	}
+	return map
+}
+	  
+const createPago_V2 = async (plan, medical, analisys) => {
+	const currency_id = "ARS";
+	const preference = {
+		items: [],	
+		back_urls: {
+			"success": "http://localhost:5173/checkoutcart/feedback",
+			"failure": "",
+			"pending": "",
+		},
+	}
+	if(plan) {
+		plan.map(p => {
+			preference.items.push(mapObject(p, currency_id))
+		})
+		
+	}
+
+	if(medical){
+		medical.map( m => {
+			preference.items.push(mapObject(m, currency_id))
+		})
+	}
+
+	if(analisys){
+		analisys.map( a => {
+			preference.items.push(mapObject(a, currency_id))
+		})
+	}
+	  
+
+	
+  
+	const result = await mercadopago.preferences.create(preference);
+	// Enviamos la preferencia a MercadoPago y devolvemos su ID en la respuesta JSON
+	return {
+			mpresult:result, global: {init_point: result.body.init_point}
+	}
+  }
+
+  
+//   ACA TERMINA EL CODIGO DE VERNA V2
+
+
+
 module.exports = {
   createPago,
+  createPago_V2
 };
