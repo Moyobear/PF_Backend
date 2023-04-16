@@ -1,4 +1,5 @@
 const mercadopago = require("mercadopago");
+const axios = require('axios')
 const {PROD_ACCESS_TOKEN} = process.env
 
 // Configuramos el token de acceso de MercadoPago
@@ -8,9 +9,7 @@ mercadopago.configure({
 
     // Configuramos una ruta POST para crear una preferencia de pago en MercadoPago
 const createPago = async (id, title, description, picture_url, quantity, currency_id, unit_price) => {
-    
-        console.log("pase por el controller");
-        console.log(title,unit_price, quantity)
+
     // Creamos la preferencia con los datos recibidos en el cuerpo de la solicitud POST
 let preference = {
 	items: [
@@ -25,7 +24,7 @@ let preference = {
 		}
 	],
 	back_urls: {
-		"success": "http://localhost:3000/feedback",
+		"success": "http://localhost:3001/mercadoPago/feedback",
 		"failure": "",
 		"pending": "",
 	},
@@ -42,6 +41,68 @@ const result = await mercadopago.preferences.create(preference)
   }
 }
 
+
+// const getPago = async (id) => {
+//    console.log('controller');
+//    console.log(id);
+//    const result = await axios.get(`https://api.mercadopago.com/v1/payments/${id}`,{
+//     headers:{
+//        Authorization: `Bearer ${PROD_ACCESS_TOKEN}`
+//      }
+//    } )
+//    return result 
+//  }
+
+
+// const getPago = async (id) => {
+//   const payment_id = 'ID_DEL_PAGO_A_CONSULTAR';
+//   try {
+//     const payment = await mercadopago.payment.findById(id);
+//     console.log(payment);
+//     // Si el estado del pago es "approved" (aprobado), significa que el usuario ha realizado el pago correctamente
+//     if (payment.response.status === 'approved') {
+//       console.log('El pago ha sido aprobado');
+//     } else {
+//       console.log('El pago aún no ha sido aprobado');
+//     }
+//   } catch (error) {
+//     console.error(error);
+//   }
+// }
+
+
+// // para recibir la info del pago
+// const getPago = async (req, res, next) => {
+//   try{
+//   const userId = req.params.id
+//   const payment_id = req.query["data.id"]
+//   const payment_switch = req.query.type
+//   if(payment_switch === "payment") {
+//     const payment = await mercadopago.payment.findById(payment_id);
+//     /* const paymentModel = await Payment.create({info : payment.body}) */
+//     if(payment.response.status === "approved"){
+//       try{
+//       let order_info = await generateOrder(userId)
+//       order_info = await approveOrder(order_info.id)
+//     /* order_info.paymentId = paymentModel.id */
+//       sendMail(userId, order_info.id)
+//       res.status(200).send({Order: order_info})
+//       }
+//       catch (error) {res.status(500).send({message: error.message})}
+//     }
+//     else if (payment.response.status === "rejected") {
+//     try{
+//       let order_info = await generateOrder(userId)
+//     order_info = await rejectOrder(order_info.id)
+//     res.status(200).send({Order: order_info})
+//     }
+//     catch (error) {res.status(500).send({message: error.message})}
+//     }
+//   }
+//   res.status(200).send()
+// }
+// catch (error) {res.status(500).send({message: error.message})}
+// }
 
 
 

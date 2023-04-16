@@ -6,6 +6,7 @@ const {POST_PAGO, GET_FILE} = require('../handlers/mercadoPagoHandlers/mercadoPa
 const mercadoPagoRouter = Router();
 
 mercadoPagoRouter.post('/', POST_PAGO)
-mercadoPagoRouter.get('/', GET_FILE)
+
+mercadoPagoRouter.get('/feedback', GET_FILE)
 
 module.exports = mercadoPagoRouter
