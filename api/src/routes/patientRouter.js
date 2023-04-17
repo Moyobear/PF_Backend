@@ -14,12 +14,12 @@ const {
   getPatientsDeletedHandler,
   recoverPatientHandler,
 } = require("../handlers/patientHandlers/patientHandlers.js");
-const jwtCheck = require("../middlewares/auth.js");
+
 
 // *Acá definimos las rutas de pacientes:
 const patientRouter = Router();
 
-patientRouter.get("/patientsDeleted", jwtCheck, getPatientsDeletedHandler);
+patientRouter.get("/patientsDeleted", getPatientsDeletedHandler);
 
 patientRouter.get("/", getPatientsHandler);
 
@@ -27,12 +27,12 @@ patientRouter.get("/dni", getDniPatientHandler);
 
 patientRouter.get("/:id", getPatientIdHandler);
 
-patientRouter.post("/", jwtCheck, validatorCreatePatient, createPatientHandler);
+patientRouter.post("/", validatorCreatePatient, createPatientHandler);
 
-patientRouter.put("/", jwtCheck, validatorUpdatePatient, updatePatientHandler);
+patientRouter.put("/", validatorUpdatePatient, updatePatientHandler);
 
-patientRouter.put("/recoverPatient", jwtCheck, recoverPatientHandler);
+patientRouter.put("/recoverPatient", recoverPatientHandler);
 
-patientRouter.delete("/:id/delete", jwtCheck, deletePatientHandler);
+patientRouter.delete("/:id/delete", deletePatientHandler);
 
 module.exports = patientRouter;

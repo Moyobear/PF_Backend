@@ -9,22 +9,21 @@ const {
 } = require("../handlers/userHandlers/userHandlers");
 
 const { validatorCreateUser } = require("../middlewares/validators.js");
-const jwtCheck = require("../middlewares/auth.js");
 
 // *Acá definimos las rutas de usuarios:
 
 const userRouter = Router();
 
-userRouter.get("/", jwtCheck, GET_USER);
+userRouter.get("/", GET_USER);
 
-userRouter.get("/:id", jwtCheck, GET_USER_ID);
+userRouter.get("/:id", GET_USER_ID);
 
-userRouter.post("/", jwtCheck, validatorCreateUser, POST_USER);
+userRouter.post("/", validatorCreateUser, POST_USER);
 
-userRouter.put("/", jwtCheck, PUT_USER);
+userRouter.put("/", PUT_USER);
 
-userRouter.put("/isAdmin", jwtCheck, PUT_ISADMIN);
+userRouter.put("/isAdmin", PUT_ISADMIN);
 
-userRouter.delete("/:id", jwtCheck, DELETE_USER);
+userRouter.delete("/:id", DELETE_USER);
 
 module.exports = userRouter;

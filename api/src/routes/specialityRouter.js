@@ -7,23 +7,17 @@ const {
 } = require("../handlers/specialityHandlers/specialityHandlers");
 
 const { validatorCreateSpeciality } = require("../middlewares/validators.js");
-const jwtCheck = require("../middlewares/auth.js");
 
 // *Acá definimos las rutas de especialidades:
 
 const specialityRouter = Router();
 
-specialityRouter.get("/", jwtCheck, GET_SPECIALITY);
+specialityRouter.get("/", GET_SPECIALITY);
 
-specialityRouter.post(
-  "/",
-  jwtCheck,
-  validatorCreateSpeciality,
-  POST_SPECIALITY
-);
+specialityRouter.post("/", validatorCreateSpeciality, POST_SPECIALITY);
 
-specialityRouter.put("/", jwtCheck, PUT_SPECIALITY);
+specialityRouter.put("/", PUT_SPECIALITY);
 
-specialityRouter.delete("/:id", jwtCheck, DELETE_SPECIALITY);
+specialityRouter.delete("/:id", DELETE_SPECIALITY);
 
 module.exports = specialityRouter;

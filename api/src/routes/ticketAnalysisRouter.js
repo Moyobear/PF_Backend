@@ -8,26 +8,20 @@ const {
 const {
   validatorCreateTicketAnalisys,
 } = require("../middlewares/validators.js");
-const jwtCheck = require("../middlewares/auth.js");
 
 // *Acá definimos las rutas de turnos para análisis:
 const ticketAnalisysRouter = Router();
 
-ticketAnalisysRouter.get("/", jwtCheck, allTicketAnalisysHandler);
+ticketAnalisysRouter.get("/", allTicketAnalisysHandler);
 
-ticketAnalisysRouter.get("/:id", jwtCheck, ticketAnalisysIdHandler);
+ticketAnalisysRouter.get("/:id", ticketAnalisysIdHandler);
 
 ticketAnalisysRouter.post(
   "/createTicketAnalisys",
-  jwtCheck,
   validatorCreateTicketAnalisys,
   createTicketAnalisysHandler
 );
 
-ticketAnalisysRouter.delete(
-  "/:id/delete",
-  jwtCheck,
-  deleteTicketAnalisysHandler
-);
+ticketAnalisysRouter.delete("/:id/delete", deleteTicketAnalisysHandler);
 
 module.exports = ticketAnalisysRouter;

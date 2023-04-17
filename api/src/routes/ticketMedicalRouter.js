@@ -10,26 +10,24 @@ const {
 const {
   validatorCreateTicketMedical,
 } = require("../middlewares/validators.js");
-const jwtCheck = require("../middlewares/auth.js");
 
 // *Acá definimos las rutas de turnos médicos:
 const ticketMedicalRouter = Router();
 
-ticketMedicalRouter.get("/", jwtCheck, allTicketHandler);
+ticketMedicalRouter.get("/", allTicketHandler);
 
-ticketMedicalRouter.get("/:id", jwtCheck, ticketIdHandler);
+ticketMedicalRouter.get("/:id", ticketIdHandler);
 
 ticketMedicalRouter.post(
   "/createTicketMedical",
-  jwtCheck,
   validatorCreateTicketMedical,
   ticketMedicalHandler
 );
 
-ticketMedicalRouter.put("/confirmTicket", jwtCheck, confirmTicketHandler);
+ticketMedicalRouter.put("/confirmTicket", confirmTicketHandler);
 
-ticketMedicalRouter.delete("/destroyTicket", jwtCheck, destroyTicketHandler);
+ticketMedicalRouter.delete("/destroyTicket", destroyTicketHandler);
 
-ticketMedicalRouter.delete("/:id/delete", jwtCheck, deleteTicketHandler);
+ticketMedicalRouter.delete("/:id/delete", deleteTicketHandler);
 
 module.exports = ticketMedicalRouter;

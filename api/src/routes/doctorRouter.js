@@ -21,7 +21,7 @@ const {
 // *Acá definimos las rutas de medicos:
 const doctorRouter = Router();
 
-doctorRouter.get("/doctorsDeleted", jwtCheck, getDoctorsDeletedHandler);
+doctorRouter.get("/doctorsDeleted", getDoctorsDeletedHandler);
 
 doctorRouter.get("/names", getNamesHandler);
 
@@ -31,16 +31,16 @@ doctorRouter.get("/", getDoctorsHandler);
 
 doctorRouter.get("/:id", getDoctorIdHandler);
 
-doctorRouter.post("/", jwtCheck, validatorCreateDoctor, createDoctorHandler);
+doctorRouter.post("/", validatorCreateDoctor, createDoctorHandler);
 
-doctorRouter.put("/", jwtCheck, validatorUpdateDoctor, updateDoctorHandler);
+doctorRouter.put("/", validatorUpdateDoctor, updateDoctorHandler);
 
-doctorRouter.put("/recoverDoctor", jwtCheck, recoverDoctorHandler);
+doctorRouter.put("/recoverDoctor", recoverDoctorHandler);
 
-doctorRouter.put("/medicalGuard", jwtCheck, updateMedicalGuardHandler);
+doctorRouter.put("/medicalGuard", updateMedicalGuardHandler);
 
 doctorRouter.delete("/delSchedule", jwtCheck, deleteScheduleHandler);
 
-doctorRouter.delete("/:id/delete", jwtCheck, deleteDoctorHandler);
+doctorRouter.delete("/:id/delete", jwtCheck,  deleteDoctorHandler);
 
 module.exports = doctorRouter;
