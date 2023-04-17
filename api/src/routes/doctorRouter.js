@@ -3,6 +3,7 @@ const {
   validatorCreateDoctor,
   validatorUpdateDoctor,
 } = require("../middlewares/validators.js");
+const jwtCheck = require("../middlewares/auth.js");
 const {
   getNamesHandler,
   getDoctorsDeletedHandler,
@@ -20,7 +21,7 @@ const {
 // *Acá definimos las rutas de medicos:
 const doctorRouter = Router();
 
-doctorRouter.get("/doctorsDeleted", getDoctorsDeletedHandler);
+doctorRouter.get("/doctorsDeleted", jwtCheck, getDoctorsDeletedHandler);
 
 doctorRouter.get("/names", getNamesHandler);
 
@@ -30,16 +31,16 @@ doctorRouter.get("/", getDoctorsHandler);
 
 doctorRouter.get("/:id", getDoctorIdHandler);
 
-doctorRouter.post("/", validatorCreateDoctor, createDoctorHandler);
+doctorRouter.post("/", jwtCheck, validatorCreateDoctor, createDoctorHandler);
 
-doctorRouter.put("/", validatorUpdateDoctor, updateDoctorHandler);
+doctorRouter.put("/", jwtCheck, validatorUpdateDoctor, updateDoctorHandler);
 
-doctorRouter.put("/recoverDoctor", recoverDoctorHandler);
+doctorRouter.put("/recoverDoctor", jwtCheck, recoverDoctorHandler);
 
-doctorRouter.put("/medicalGuard", updateMedicalGuardHandler);
+doctorRouter.put("/medicalGuard", jwtCheck, updateMedicalGuardHandler);
 
-doctorRouter.delete("/delSchedule", deleteScheduleHandler);
+doctorRouter.delete("/delSchedule", jwtCheck, deleteScheduleHandler);
 
-doctorRouter.delete("/:id/delete", deleteDoctorHandler);
+doctorRouter.delete("/:id/delete", jwtCheck, deleteDoctorHandler);
 
 module.exports = doctorRouter;

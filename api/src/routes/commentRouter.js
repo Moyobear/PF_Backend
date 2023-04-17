@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const { validatorCreateComment } = require("../middlewares/validators.js");
+const jwtCheck = require("../middlewares/auth.js");
 const {
   createCommentHandler,
   getCommentsHandler,
@@ -11,8 +12,8 @@ const commentRouter = Router();
 
 commentRouter.get("/", getCommentsHandler);
 
-commentRouter.get("/userComments", getCommentsUserHandler);
+commentRouter.get("/userComments", jwtCheck, getCommentsUserHandler);
 
-commentRouter.post("/", validatorCreateComment, createCommentHandler);
+commentRouter.post("/", jwtCheck, validatorCreateComment, createCommentHandler);
 
 module.exports = commentRouter;

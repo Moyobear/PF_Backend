@@ -1,46 +1,54 @@
 const mercadopago = require("mercadopago");
-const axios = require('axios')
-const {PROD_ACCESS_TOKEN} = process.env
+const axios = require("axios");
+const { PROD_ACCESS_TOKEN } = process.env;
 
 // Configuramos el token de acceso de MercadoPago
 mercadopago.configure({
   access_token: PROD_ACCESS_TOKEN,
 });
 
-    // Configuramos una ruta POST para crear una preferencia de pago en MercadoPago
-const createPago = async (id, title, description, picture_url, quantity, currency_id, unit_price) => {
-
-    // Creamos la preferencia con los datos recibidos en el cuerpo de la solicitud POST
-let preference = {
-	items: [
-		{
-      id: id,
-			title: title,
-      description: description,
-      picture_url: picture_url,
-      currency_id: "ARS",
-			unit_price: unit_price,
-			quantity: quantity,
-		}
-	],
-	back_urls: {
-		"success": "http://localhost:3001/mercadoPago/feedback",
-		"failure": "",
-		"pending": "",
-	},
-// auto es para que si se aprueva el pago te diriga a la pagina asignada arriba
-// binary mode es para cancelar otros tipos de pago, solo aceptar tarjeta de credito
-	auto_return: "approved",
-	binary_mode:  true,
-};
+// Configuramos una ruta POST para crear una preferencia de pago en MercadoPago
+const createPago = async (
+  id,
+  title,
+  description,
+  picture_url,
+  quantity,
+  currency_id,
+  unit_price
+) => {
+  // Creamos la preferencia con los datos recibidos en el cuerpo de la solicitud POST
+  let preference = {
+    items: [
+      {
+        id: id,
+        title: title,
+        description: description,
+        picture_url: picture_url,
+        currency_id: "ARS",
+        unit_price: unit_price,
+        quantity: quantity,
+      },
+    ],
+    back_urls: {
+      success:
+        "https://vitality-medical-group.vercel.app/checkoutcart/feedback",
+      failure: "",
+      pending: "",
+    },
+    // auto es para que si se aprueva el pago te diriga a la pagina asignada arriba
+    // binary mode es para cancelar otros tipos de pago, solo aceptar tarjeta de credito
+    auto_return: "approved",
+    binary_mode: true,
+  };
 
   const result = await mercadopago.preferences.create(preference);
   // Enviamos la preferencia a MercadoPago y devolvemos su ID en la respuesta JSON
   return {
-          mpresult:result,global: id
-  }
-}
-
+    mpresult: result,
+    global: id,
+  };
+};
 
 // const getPago = async (id) => {
 //    console.log('controller');
@@ -50,9 +58,8 @@ let preference = {
 //        Authorization: `Bearer ${PROD_ACCESS_TOKEN}`
 //      }
 //    } )
-//    return result 
+//    return result
 //  }
-
 
 // const getPago = async (id) => {
 //   const payment_id = 'ID_DEL_PAGO_A_CONSULTAR';
@@ -69,7 +76,6 @@ let preference = {
 //     console.error(error);
 //   }
 // }
-
 
 // // para recibir la info del pago
 // const getPago = async (req, res, next) => {
@@ -104,68 +110,61 @@ let preference = {
 // catch (error) {res.status(500).send({message: error.message})}
 // }
 
-
-
 // ACA EMPIEZA EL CODIGO DE BERNA V1
 
 const mapObject = (obj, id) => {
-	const map = {            
-		id: obj.id,
-		title: obj.title,
-		description: obj.description,
-		picture_url: obj.picture_url,
-		quantity: obj.quantity,
-		unit_price: obj.price,
-		currency_id: id,
-	}
-	return map
-}
-	  
+  const map = {
+    id: obj.id,
+    title: obj.title,
+    description: obj.description,
+    picture_url: obj.picture_url,
+    quantity: obj.quantity,
+    unit_price: obj.price,
+    currency_id: id,
+  };
+  return map;
+};
+
 const createPago_V2 = async (plan, medical, analisys) => {
-	const currency_id = "ARS";
-	const preference = {
-		items: [],	
-		back_urls: {
-			"success": "https://vitality-medical-group.vercel.app/checkoutcart/feedback",
-			"failure": "",
-			"pending": "",
-		},
-	}
-	if(plan) {
-		plan.map(p => {
-			preference.items.push(mapObject(p, currency_id))
-		})
-		
-	}
-
-	if(medical){
-		medical.map( m => {
-			preference.items.push(mapObject(m, currency_id))
-		})
-	}
-
-	if(analisys){
-		analisys.map( a => {
-			preference.items.push(mapObject(a, currency_id))
-		})
-	}
-	  
-
-	
-  
-	const result = await mercadopago.preferences.create(preference);
-	// Enviamos la preferencia a MercadoPago y devolvemos su ID en la respuesta JSON
-	return {
-			mpresult:result, global: {init_point: result.body.init_point}
-	}
+  const currency_id = "ARS";
+  const preference = {
+    items: [],
+    back_urls: {
+      success:
+        "https://vitality-medical-group.vercel.app/checkoutcart/feedback",
+      failure: "",
+      pending: "",
+    },
+  };
+  if (plan) {
+    plan.map((p) => {
+      preference.items.push(mapObject(p, currency_id));
+    });
   }
 
-  
+  if (medical) {
+    medical.map((m) => {
+      preference.items.push(mapObject(m, currency_id));
+    });
+  }
+
+  if (analisys) {
+    analisys.map((a) => {
+      preference.items.push(mapObject(a, currency_id));
+    });
+  }
+
+  const result = await mercadopago.preferences.create(preference);
+  // Enviamos la preferencia a MercadoPago y devolvemos su ID en la respuesta JSON
+  return {
+    mpresult: result,
+    global: { init_point: result.body.init_point },
+  };
+};
+
 //   ACA TERMINA EL CODIGO DE VERNA V2
-
-
 
 module.exports = {
   createPago,
-  createPago_V2
+  createPago_V2,
 };
