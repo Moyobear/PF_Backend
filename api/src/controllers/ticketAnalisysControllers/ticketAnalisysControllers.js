@@ -46,9 +46,21 @@ const deleteTicketAnalisys = async (id) => {
   return "El turno para análisis clinico fue borrado exitosamente";
 };
 
+// *Este controller permite borrar/destruir(borrado fisico) todos ticketsAnalysis .
+const destroyAllTicket = async () => {
+  const request = await TicketAnalysis.findAll();
+
+  await request.forEach(function (item) {
+    item.destroy();
+  });
+
+  return "Todos los registros de los turnos para análisis clínico fueron exitosamente destruidos";
+};
+
 module.exports = {
   createTicket,
   allTickets,
   ticketAnalisysId,
   deleteTicketAnalisys,
+  destroyAllTicket,
 };
