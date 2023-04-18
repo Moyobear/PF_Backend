@@ -1,7 +1,9 @@
 const { Patient, TicketAnalysis, Analysis } = require("../../db.js");
 // *Este controller permite crear el TicketAnalysis, realizar la asociación entre TicketAnalysis y Analysis y paciente a TicketAnalysis:
-const createTicket = async (idAnalysis, idPatient, date, hour, price) => {
+const createTicket = async (idAnalysis, title, observations, idPatient, date, hour, price) => {
   const requestTicketAnalysis = await TicketAnalysis.create({
+    title,
+    observations,
     date,
     hour,
     price,
