@@ -7,9 +7,11 @@ const {
 
 const createTicketAnalisysHandler = async (req, res) => {
   try {
-    const { idAnalysis, idPatient, date, hour, price } = req.body;
+    const { idAnalysis, title, observations, idPatient, date, hour, price } = req.body;
     const request = await createTicket(
       idAnalysis,
+      title,
+      observations,
       idPatient,
       date,
       hour,
