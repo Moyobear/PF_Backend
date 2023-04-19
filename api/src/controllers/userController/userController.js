@@ -184,6 +184,9 @@ const deleteUser = async (id) => {
   return "El usuario fue borrado exitosamente";
 };
 
+
+console.log()
+
 module.exports = {
   getAllUser,
   getUserById,
