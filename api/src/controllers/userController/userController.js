@@ -106,7 +106,7 @@ const createUser = async (full_name, email, password, user_name, image) => {
 const setUser = async (
   id,
   full_name,
-
+  email,
   password,
   user_name,
   image,
